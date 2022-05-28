@@ -1,6 +1,8 @@
 import 'package:e_commerse/screens/user_info.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/bottom_bar.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: UserInfo(),
+      home: BottomBarScreen(),
     );
   }
 }
