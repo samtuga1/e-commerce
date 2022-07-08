@@ -71,26 +71,26 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  title: Text('Home'),
+                  //title: Text('Home'),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.rss_feed),
-                  title: Text('Feeds'),
+                  // title: Text('Feeds'),
                 ),
                 BottomNavigationBarItem(
                   activeIcon: null,
                   icon: Icon(null),
-                  title: Text('Search'),
+                  // title: Text('Search'),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.shopping_bag,
                   ),
-                  title: Text('Cart'),
+                  // title: Text('Cart'),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
-                  title: Text('User'),
+                  //  title: Text('User'),
                 ),
               ],
             ),
