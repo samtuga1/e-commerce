@@ -47,14 +47,14 @@ class _UserInfoState extends State<UserInfo> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        'User details',
+        title,
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
       ),
     );
   }
 
   Widget buildFAB() {
-    final double defaultTopMargin = 200 - 27;
+    final double defaultTopMargin = 200 - 12;
     final double scaleStart = 100;
     final double scaleEnd = scaleStart / 2;
     double top = defaultTopMargin;

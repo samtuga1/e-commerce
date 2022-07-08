@@ -47,53 +47,54 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     return Scaffold(
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomAppBar(
-        // color: Colors.white,
         shape: CircularNotchedRectangle(),
         notchMargin: 0.01,
         clipBehavior: Clip.antiAlias,
         child: Container(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                top: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              top: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
               ),
             ),
-            child: BottomNavigationBar(
-              onTap: _selectPage,
-              backgroundColor: Theme.of(context).primaryColor,
-              unselectedItemColor: Theme.of(context).textSelectionColor,
-              selectedItemColor: Colors.purple,
-              currentIndex: _selectedPageIndex,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  //title: Text('Home'),
+          ),
+          child: BottomNavigationBar(
+            onTap: _selectPage,
+            backgroundColor: Theme.of(context).primaryColor,
+            unselectedItemColor: Theme.of(context).textSelectionColor,
+            selectedItemColor: Colors.purple,
+            currentIndex: _selectedPageIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.rss_feed),
+                // title: Text('Feeds'),
+                label: 'Feeds',
+              ),
+              BottomNavigationBarItem(
+                activeIcon: null,
+                icon: Icon(null),
+                // title: Text('Search'),
+                label: 'Search',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.shopping_bag,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.rss_feed),
-                  // title: Text('Feeds'),
-                ),
-                BottomNavigationBarItem(
-                  activeIcon: null,
-                  icon: Icon(null),
-                  // title: Text('Search'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.shopping_bag,
-                  ),
-                  // title: Text('Cart'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  //  title: Text('User'),
-                ),
-              ],
-            ),
+                // title: Text('Cart'),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                //  title: Text('User'),
+                label: 'User',
+              ),
+            ],
           ),
         ),
       ),
