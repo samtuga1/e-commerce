@@ -1,3 +1,4 @@
+import 'package:e_commerse/screens/cart_empty.dart';
 import 'package:flutter/material.dart';
 
 class Cart extends StatelessWidget {
@@ -7,7 +8,7 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Hello'),
+        child: CartEmpty(),
       ),
     );
   }
