@@ -1,6 +1,10 @@
+import 'package:e_commerse/providers/theme_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserInfo extends StatefulWidget {
+  static const routeName = 'UserInfo';
   UserInfo({Key? key}) : super(key: key);
 
   @override
@@ -17,14 +21,19 @@ class _UserInfoState extends State<UserInfo> {
     });
   }
 
-  bool _themeSwitch = false;
+  double top = 0.0;
+  String? _name;
+  String? _userImage;
 
   final List<IconData> _userTileIcons = [
     Icons.email,
     Icons.phone,
     Icons.local_shipping,
     Icons.watch_later,
-    Icons.exit_to_app_rounded
+    Icons.exit_to_app_rounded,
+    Icons.favorite,
+    Icons.chevron_right_rounded,
+    Icons.book,
   ];
 
   Widget userListTile(
@@ -88,6 +97,7 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Provider.of<DarkThemeProvider>(context, listen: false);
     return Stack(children: [
       CustomScrollView(
         controller: _scrollController,
@@ -98,43 +108,108 @@ class _UserInfoState extends State<UserInfo> {
             backgroundColor: Colors.red,
             pinned: true,
             expandedHeight: 200,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return SizedBox(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        titles('User Information'),
-                        Divider(),
-                        userListTile(0, 'Email', 'Email sub', context),
-                        userListTile(0, 'Email', 'Email sub', context),
-                        userListTile(0, 'Email', 'Email sub', context),
-                        userListTile(0, 'Email', 'Email sub', context),
-                        userListTile(0, 'Email', 'Email sub', context),
-                        userListTile(0, 'Email', 'Email sub', context),
-                        userListTile(1, 'Phone', '', context),
-                        userListTile(2, 'Shipping address', '344', context),
-                        userListTile(3, 'Joined date', '4/4/4', context),
-                        titles('User Settings'),
-                        Divider(),
-                        ListTile(
-                          leading: Icon(Icons.wb_sunny),
-                          title: Text('Theme'),
-                          trailing: Switch.adaptive(
-                              value: _themeSwitch,
-                              onChanged: (val) {
-                                setState(() {
-                                  _themeSwitch = val;
-                                });
-                              }),
-                        ),
-                        userListTile(4, 'Logout', '', context),
-                      ]),
+            flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                top = constraints.biggest.height;
+                return Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: FractionalOffset(0, 0),
+                      end: FractionalOffset(1, 0),
+                      stops: [0, 1],
+                      colors: [Colors.purple, Colors.white],
+                    ),
+                  ),
+                  child: FlexibleSpaceBar(
+                    background: FlutterLogo(),
+                    centerTitle: true,
+                    title: AnimatedOpacity(
+                      duration: Duration(milliseconds: 300),
+                      opacity: top <= 110 ? 1 : 0,
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            height: kToolbarHeight / 1.8,
+                            width: kToolbarHeight / 1.8,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1.0,
+                                ),
+                              ],
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(_userImage ??
+                                    'https://images.unsplash.com/photo-1656051171336-f7430be33a4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8OHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(_name ?? 'test'),
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               },
-              childCount: 1,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: titles('User Bag'),
+                ),
+                Divider(),
+                userListTile(5, 'Wishlist', '', context),
+                userListTile(6, 'Cart', '', context),
+                userListTile(7, 'My orders', '', context),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: titles('User Information'),
+                ),
+                Divider(),
+                userListTile(0, 'Email', 'Email sub', context),
+                userListTile(1, 'Phone', '', context),
+                userListTile(2, 'Shipping address', '344', context),
+                userListTile(3, 'Joined date', '4/4/4', context),
+                titles('User Settings'),
+                Divider(),
+                ListTile(
+                    leading: Icon(Icons.wb_sunny),
+                    title: Text('Theme'),
+                    trailing: CupertinoSwitch(
+                      value: themeData.darkTheme,
+                      onChanged: (val) {
+                        setState(
+                          () {
+                            themeData.darkTheme = val;
+                          },
+                        );
+                      },
+                    )
+                    // Switch.adaptive(
+                    //   value: _themeSwitch,
+                    //   onChanged: (val) {
+                    //     setState(
+                    //       () {
+                    //         _themeSwitch = val;
+                    //       },
+                    //     );
+                    //   },
+                    // ),
+                    ),
+                userListTile(4, 'Logout', '', context),
+              ],
             ),
           )
         ],
