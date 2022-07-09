@@ -145,7 +145,7 @@ class _UserInfoState extends State<UserInfo> {
                               image: DecorationImage(
                                 fit: BoxFit.fill,
                                 image: NetworkImage(_userImage ??
-                                    'https://images.unsplash.com/photo-1656051171336-f7430be33a4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8OHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'),
+                                    'https://post.healthline.com/wp-content/uploads/2020/07/285960-9-Best-Shoe-Brands-for-Bunions_Thumbnail-732x549.jpg'),
                               ),
                             ),
                           ),
