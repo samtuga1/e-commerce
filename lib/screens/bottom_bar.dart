@@ -12,7 +12,7 @@ class BottomBarScreen extends StatefulWidget {
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
   late List<Map<String, Widget>> _pages;
-  int _selectedPageIndex = 4;
+  int _selectedPageIndex = 0;
 
   @override
   void initState() {
@@ -104,6 +104,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         padding: const EdgeInsets.all(8.0),
         child: FloatingActionButton(
           hoverElevation: 10,
+          backgroundColor: Colors.purple,
           splashColor: Colors.grey,
           tooltip: 'Search',
           elevation: 4,
