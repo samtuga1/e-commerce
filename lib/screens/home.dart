@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: Center(
         child: BackdropScaffold(
+          frontLayerBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: BackdropAppBar(
             flexibleSpace: Container(
               decoration: BoxDecoration(
