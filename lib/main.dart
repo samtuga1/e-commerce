@@ -5,6 +5,7 @@ import 'package:e_commerse/screens/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'inner_screens/brands_navigation_rail copy.dart';
 import 'screens/bottom_bar.dart';
 
 void main() {
@@ -45,6 +46,8 @@ class _MyAppState extends State<MyApp> {
           home: BottomBarScreen(),
           routes: {
             UserInfo.routeName: (context) => UserInfo(),
+            BrandNavigationRailScreen.routeName: (context) =>
+                BrandNavigationRailScreen(),
           },
         );
       }),
