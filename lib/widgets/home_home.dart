@@ -4,6 +4,8 @@ import 'package:e_commerse/widgets/category.dart';
 import 'package:e_commerse/widgets/popular_products.dart';
 import 'package:flutter/material.dart';
 
+import '../inner_screens/brands_navigation_rail copy.dart';
+
 class HomeHome extends StatelessWidget {
   HomeHome({
     Key? key,
@@ -106,6 +108,15 @@ class HomeHome extends StatelessWidget {
                   ),
                 );
               },
+              onTap: (index) {
+                print('hi');
+                Navigator.of(context).pushNamed(
+                  BrandNavigationRailScreen.routeName,
+                  arguments: {
+                    index,
+                  },
+                );
+              },
               itemCount: 5,
               viewportFraction: 0.8,
               scale: 0.9,
@@ -117,7 +128,7 @@ class HomeHome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Popular Brands',
+                  'Popular Products',
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 20,
