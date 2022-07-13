@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'brands_rail_widget.dart';
 
 class BrandNavigationRailScreen extends StatefulWidget {
-  BrandNavigationRailScreen({required Key key}) : super(key: key);
+  BrandNavigationRailScreen({Key? key}) : super(key: key);
 
   static const routeName = '/brands_navigation_rail';
   @override
