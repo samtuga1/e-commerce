@@ -1,7 +1,9 @@
+import 'package:e_commerse/inner_screens/brands_navigation_rail%20copy.dart';
 import 'package:flutter/material.dart';
 
 class PopularProducts extends StatelessWidget {
-  const PopularProducts({Key? key}) : super(key: key);
+  const PopularProducts({Key? key, this.onTapped}) : super(key: key);
+  final Function()? onTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class PopularProducts extends StatelessWidget {
         ),
         child: Material(
           child: InkWell(
-            onTap: () {},
+            onTap: onTapped,
             child: Container(
               width: 215,
               child: Stack(
