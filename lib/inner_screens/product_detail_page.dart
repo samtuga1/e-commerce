@@ -1,4 +1,5 @@
 import 'package:e_commerse/consts/colors.dart';
+import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:e_commerse/widgets/feeds_products.dart';
@@ -48,6 +49,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
+    final productsData = Provider.of<Products>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -254,12 +256,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 30.0),
-                  height: 300,
+                  height: 330,
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 7,
-                    itemBuilder: (context, index) => FeedProducts(height: 80),
+                    itemCount: productsData.getPopuplarProducts.length,
+                    itemBuilder: (context, index) =>
+                        ChangeNotifierProvider.value(
+                      value: productsData.getPopuplarProducts[index],
+                      child: FeedProducts(height: 80),
+                    ),
                   ),
                 ),
               ],
