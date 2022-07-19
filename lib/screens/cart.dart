@@ -2,8 +2,9 @@ import 'package:e_commerse/widgets/cart_empty.dart';
 import 'package:e_commerse/widgets/cart_full.dart';
 import 'package:flutter/material.dart';
 
-class Cart extends StatelessWidget {
-  const Cart({Key? key}) : super(key: key);
+class CartScreen extends StatelessWidget {
+  static const routeName = '/carts';
+  const CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
