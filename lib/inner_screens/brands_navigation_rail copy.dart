@@ -1,3 +1,4 @@
+import 'package:e_commerse/consts/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'brands_rail_widget.dart';
@@ -153,6 +154,7 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
                         decorationThickness: 2.5,
                       ),
                       unselectedLabelTextStyle: TextStyle(
+                        color: Theme.of(context).textSelectionColor,
                         fontSize: 15,
                         letterSpacing: 0.8,
                       ),
