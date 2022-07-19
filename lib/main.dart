@@ -1,14 +1,17 @@
 import 'package:e_commerse/consts/theme_data.dart';
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/dark_theme_sharedpreference.dart';
+import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/cart.dart';
+import 'package:e_commerse/screens/feeds.dart';
 import 'package:e_commerse/screens/user_info.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'inner_screens/brands_navigation_rail copy.dart';
+import 'inner_screens/category_feeds.dart';
 import 'screens/bottom_bar.dart';
 
 void main() {
@@ -41,6 +44,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) => _themeProvider,
         ),
+        ChangeNotifierProvider(
+          create: (context) => Products(),
+        ),
       ],
       child: Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
         return MaterialApp(
@@ -54,6 +60,8 @@ class _MyAppState extends State<MyApp> {
             WishlistScreen.routeName: (context) => WishlistScreen(),
             ProductDetailPage.routeName: (context) => ProductDetailPage(),
             CartScreen.routeName: (context) => CartScreen(),
+            Feeds.routeName: (context) => Feeds(),
+            CategoryFeedsScreen.routeName: (context) => CategoryFeedsScreen(),
           },
         );
       }),
