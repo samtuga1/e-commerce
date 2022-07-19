@@ -1,8 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/widgets/category.dart';
 import 'package:e_commerse/widgets/popular_products.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../inner_screens/brands_navigation_rail copy.dart';
 
@@ -29,6 +31,7 @@ class HomeHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productsData = Provider.of<Products>(context);
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -110,7 +113,6 @@ class HomeHome extends StatelessWidget {
                 );
               },
               onTap: (index) {
-                print('hi');
                 Navigator.of(context).pushNamed(
                   BrandNavigationRailScreen.routeName,
                   arguments: {
@@ -155,9 +157,12 @@ class HomeHome extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 3),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
+              itemCount: productsData.getPopuplarProducts.length,
               itemBuilder: (BuildContext context, int index) {
-                return PopularProducts();
+                return ChangeNotifierProvider.value(
+                  value: productsData.getPopuplarProducts[index],
+                  child: PopularProducts(),
+                );
               },
             ),
           )
