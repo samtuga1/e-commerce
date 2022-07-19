@@ -2,6 +2,7 @@ import 'package:e_commerse/consts/theme_data.dart';
 import 'package:e_commerse/models/dark_theme_sharedpreference.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/user_info.dart';
+import 'package:e_commerse/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
             UserInfo.routeName: (context) => UserInfo(),
             BrandNavigationRailScreen.routeName: (context) =>
                 BrandNavigationRailScreen(),
+            WishlistScreen.routeName: (context) => WishlistScreen(),
           },
         );
       }),
