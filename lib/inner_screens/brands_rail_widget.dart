@@ -6,10 +6,11 @@ import 'package:provider/provider.dart';
 class BrandsNavigationRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final brandProducts = Provider.of<Product>(context);
+    final productAttributes = Provider.of<Product>(context);
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(ProductDetailPage.routeName);
+        Navigator.of(context).pushNamed(ProductDetailPage.routeName,
+            arguments: productAttributes.id);
       },
       child: Container(
         padding: EdgeInsets.only(left: 5.0, right: 5.0),
@@ -24,7 +25,7 @@ class BrandsNavigationRail extends StatelessWidget {
                   color: Theme.of(context).backgroundColor,
                   image: DecorationImage(
                       image: NetworkImage(
-                        brandProducts.imageUrl!,
+                        productAttributes.imageUrl!,
                       ),
                       fit: BoxFit.contain),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -59,7 +60,7 @@ class BrandsNavigationRail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      brandProducts.title!,
+                      productAttributes.title!,
                       maxLines: 4,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
@@ -70,7 +71,7 @@ class BrandsNavigationRail extends StatelessWidget {
                       height: 20.0,
                     ),
                     FittedBox(
-                      child: Text('\$ ${brandProducts.price}',
+                      child: Text('\$ ${productAttributes.price}',
                           maxLines: 1,
                           style: TextStyle(
                             color: Colors.red,
@@ -80,7 +81,7 @@ class BrandsNavigationRail extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Text(brandProducts.productCategoryName!,
+                    Text(productAttributes.productCategoryName!,
                         style: TextStyle(color: Colors.grey, fontSize: 18.0)),
                     SizedBox(
                       height: 20.0,
