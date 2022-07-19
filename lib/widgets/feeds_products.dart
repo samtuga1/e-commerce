@@ -1,10 +1,16 @@
 import 'package:badges/badges.dart';
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
+import 'package:e_commerse/models/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FeedProducts extends StatefulWidget {
-  const FeedProducts({Key? key, required this.height}) : super(key: key);
-  final double height;
+  const FeedProducts({
+    Key? key,
+    required this.height,
+  }) : super(key: key);
+
+  final double? height;
   @override
   _FeedProductsState createState() => _FeedProductsState();
 }
@@ -12,6 +18,7 @@ class FeedProducts extends StatefulWidget {
 class _FeedProductsState extends State<FeedProducts> {
   @override
   Widget build(BuildContext context) {
+    final productAttributes = Provider.of<Product>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -35,7 +42,7 @@ class _FeedProductsState extends State<FeedProducts> {
                         minHeight: 100,
                         maxHeight: MediaQuery.of(context).size.height * 0.3),
                     child: Image.network(
-                      'https://post.healthline.com/wp-content/uploads/2020/07/285960-9-Best-Shoe-Brands-for-Bunions_Thumbnail-732x549.jpg',
+                      productAttributes.imageUrl!,
                       fit: BoxFit.fitWidth,
                     ),
                   ),
@@ -61,7 +68,7 @@ class _FeedProductsState extends State<FeedProducts> {
                       height: 4,
                     ),
                     Text(
-                      'Description',
+                      productAttributes.description!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
@@ -72,7 +79,7 @@ class _FeedProductsState extends State<FeedProducts> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        '\$ 158.99',
+                        '\$ ${productAttributes.price}',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
@@ -85,7 +92,7 @@ class _FeedProductsState extends State<FeedProducts> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Quantity: 12',
+                          'Quantity: ${productAttributes.quantity}',
                           style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey,
