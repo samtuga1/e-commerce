@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerse/providers/product_provider.dart';
+import 'package:e_commerse/screens/feeds.dart';
 import 'package:e_commerse/widgets/category.dart';
 import 'package:e_commerse/widgets/popular_products.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +140,10 @@ class HomeHome extends StatelessWidget {
                 ),
                 FlatButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(Feeds.routeName, arguments: 'popular');
+                  },
                   child: Text(
                     'View all...',
                     style: TextStyle(
