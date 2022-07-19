@@ -604,4 +604,9 @@ class Products with ChangeNotifier {
   List<Product> get getPopuplarProducts {
     return _products.where((product) => product.isPopular == true).toList();
   }
+
+  Product findById(String id) {
+    return _products
+        .firstWhere((product) => product.id!.toLowerCase() == id.toLowerCase());
+  }
 }
