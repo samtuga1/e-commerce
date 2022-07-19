@@ -600,4 +600,8 @@ class Products with ChangeNotifier {
     }).toList();
     return brandName != 'All' ? _productBrand : [..._products];
   }
+
+  List<Product> get getPopuplarProducts {
+    return _products.where((product) => product.isPopular == true).toList();
+  }
 }
