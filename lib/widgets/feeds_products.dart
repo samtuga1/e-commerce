@@ -20,6 +20,7 @@ class _FeedProductsState extends State<FeedProducts> {
         },
         child: Container(
           height: widget.height,
+          width: 250,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               color: Theme.of(context).backgroundColor),
@@ -93,12 +94,13 @@ class _FeedProductsState extends State<FeedProducts> {
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                              onTap: () {},
-                              borderRadius: BorderRadius.circular(18.0),
-                              child: Icon(
-                                Icons.more_horiz,
-                                color: Colors.grey,
-                              )),
+                            onTap: () {},
+                            borderRadius: BorderRadius.circular(18.0),
+                            child: Icon(
+                              Icons.more_horiz,
+                              color: Colors.grey,
+                            ),
+                          ),
                         )
                       ],
                     ),
