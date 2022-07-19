@@ -593,4 +593,11 @@ class Products with ChangeNotifier {
     }).toList();
     return _productCategories;
   }
+
+  List<Product> findByBrand(String brandName) {
+    List<Product> _productBrand = _products.where((product) {
+      return product.brand!.toLowerCase() == brandName.toLowerCase();
+    }).toList();
+    return brandName != 'All' ? _productBrand : [..._products];
+  }
 }
