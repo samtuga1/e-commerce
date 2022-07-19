@@ -1,5 +1,7 @@
 import 'package:backdrop/backdrop.dart';
 import 'package:e_commerse/consts/colors.dart';
+import 'package:e_commerse/screens/cart.dart';
+import 'package:e_commerse/screens/feeds.dart';
 import 'package:flutter/material.dart';
 import '../widgets/home_home.dart';
 
@@ -14,15 +16,20 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   List _pages = [
     HomeHome(),
-    Container(
-      color: Colors.white,
-    ),
+    Feeds(),
+    Cart(),
+    Container(),
+    Container(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: BackdropScaffold(
+          frontLayerBorderRadius: BorderRadius.only(
+            topLeft: Radius.circular(0),
+            topRight: Radius.circular(0),
+          ),
           frontLayerBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: BackdropAppBar(
             flexibleSpace: Container(
@@ -51,22 +58,70 @@ class _HomeState extends State<Home> {
               )
             ],
           ),
-          backLayerBackgroundColor: Colors.white70,
-          stickyFrontLayer: true,
+          backLayerBackgroundColor: ColorsConsts.starterColor.withOpacity(0.5),
+          stickyFrontLayer: false,
           frontLayer: _pages[_currentIndex],
           backLayer: BackdropNavigationBackLayer(
             items: [
-              ListTile(title: Text("Home")),
-              ListTile(title: Text("Widget 2")),
+              CustomDropDownListTile(
+                title: 'Home',
+                icon: Icons.home,
+              ),
+              CustomDropDownListTile(
+                title: 'Feed',
+                icon: Icons.rss_feed_rounded,
+              ),
+              CustomDropDownListTile(
+                title: 'Cart',
+                icon: Icons.rss_feed_rounded,
+              ),
+              CustomDropDownListTile(
+                title: 'Wishlist',
+                icon: Icons.rss_feed_rounded,
+              ),
+              CustomDropDownListTile(
+                title: 'Upload a new product',
+                icon: Icons.rss_feed_rounded,
+              ),
             ],
             onTap: (int position) => {
               setState(() {
                 _currentIndex = position;
-                print(position);
               }),
             },
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomDropDownListTile extends StatelessWidget {
+  const CustomDropDownListTile({
+    Key? key,
+    required this.title,
+    required this.icon,
+  }) : super(key: key);
+  final String title;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.5),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Icon(icon),
+        ],
       ),
     );
   }
