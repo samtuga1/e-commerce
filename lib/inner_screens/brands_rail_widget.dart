@@ -6,7 +6,6 @@ class BrandsNavigationRail extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        color: Colors.red,
         padding: EdgeInsets.only(left: 5.0, right: 5.0),
         margin: EdgeInsets.only(right: 20.0, bottom: 5, top: 18),
         constraints: BoxConstraints(
@@ -36,7 +35,7 @@ class BrandsNavigationRail extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(10.0),
                         topRight: Radius.circular(10.0)),
