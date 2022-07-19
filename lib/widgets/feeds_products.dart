@@ -23,7 +23,8 @@ class _FeedProductsState extends State<FeedProducts> {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(ProductDetailPage.routeName);
+          Navigator.of(context).pushNamed(ProductDetailPage.routeName,
+              arguments: productAttributes.id);
         },
         child: Container(
           height: widget.height,
