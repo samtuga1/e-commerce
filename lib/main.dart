@@ -1,6 +1,8 @@
 import 'package:e_commerse/consts/theme_data.dart';
+import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/dark_theme_sharedpreference.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
+import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/user_info.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +52,8 @@ class _MyAppState extends State<MyApp> {
             BrandNavigationRailScreen.routeName: (context) =>
                 BrandNavigationRailScreen(),
             WishlistScreen.routeName: (context) => WishlistScreen(),
+            ProductDetailPage.routeName: (context) => ProductDetailPage(),
+            CartScreen.routeName: (context) => CartScreen(),
           },
         );
       }),
