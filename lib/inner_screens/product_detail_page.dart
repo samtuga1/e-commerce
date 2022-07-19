@@ -4,7 +4,6 @@ import 'package:e_commerse/screens/wishlist.dart';
 import 'package:e_commerse/widgets/feeds_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 import '../screens/cart.dart';
 
@@ -24,7 +23,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       child: Row(
         children: [
           Text(
-            title,
+            '$title: ',
             style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontWeight: FontWeight.w600,
@@ -38,7 +37,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ? Theme.of(context).disabledColor
                   : ColorsConsts.subTitle,
               fontWeight: FontWeight.w100,
-              fontSize: 20.0,
+              fontSize: 21.0,
             ),
           ),
         ],
@@ -271,7 +270,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             left: 0,
             right: 0,
             child: AppBar(
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.grey,
               elevation: 0,
               centerTitle: true,
               title: Text(
@@ -287,7 +286,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Navigator.of(context).pushNamed(WishlistScreen.routeName);
                   },
                   icon: Icon(
-                    Icons.favorite,
+                    Icons.favorite_outline,
                     color: ColorsConsts.favColor,
                   ),
                 ),
@@ -314,7 +313,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: RaisedButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(side: BorderSide.none),
-                      color: Colors.redAccent.shade100,
+                      color: Colors.redAccent.shade400,
                       onPressed: () {},
                       child: Text(
                         'ADD TO CART',
@@ -333,7 +332,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: RaisedButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(side: BorderSide.none),
-                      color: Colors.redAccent.shade100,
+                      color: Theme.of(context).backgroundColor,
                       onPressed: () {},
                       child: Row(
                         children: [
@@ -341,7 +340,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             'BUY NOW',
                             style: TextStyle(
                               fontSize: 16.0,
-                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(
