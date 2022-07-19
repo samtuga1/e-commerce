@@ -22,7 +22,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0, left: 16, right: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             title,
@@ -205,7 +204,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               height: 10.0,
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(2.0),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'No reviews yet',
+                                style: TextStyle(
+                                  color: Theme.of(context).disabledColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 21.0,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 'Be the first review',
                                 style: TextStyle(
@@ -218,40 +228,39 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ),
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 70,
                             ),
                             Divider(
                               thickness: 1,
                               color: Colors.grey,
                               height: 1,
                             ),
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(8.0),
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              child: Text(
-                                'Suggested products',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              margin: const EdgeInsets.only(bottom: 30.0),
-                              height: 300,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 7,
-                                itemBuilder: (context, index) =>
-                                    FeedProducts(height: 80),
-                              ),
-                            ),
                           ],
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8.0),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: Text(
+                    'Suggested products',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 30.0),
+                  height: 300,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 7,
+                    itemBuilder: (context, index) => FeedProducts(height: 80),
                   ),
                 ),
               ],
