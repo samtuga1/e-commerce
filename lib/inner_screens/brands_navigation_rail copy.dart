@@ -1,6 +1,8 @@
 import 'package:e_commerse/consts/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/product_provider.dart';
 import 'brands_rail_widget.dart';
 
 class BrandNavigationRailScreen extends StatefulWidget {
@@ -198,13 +200,12 @@ NavigationRailDestination buildRotatedTextRailDestination(
 }
 
 class ContentSpace extends StatelessWidget {
-  // final int _selectedIndex;
-
   final String brand;
   ContentSpace(BuildContext context, this.brand);
 
   @override
   Widget build(BuildContext context) {
+    final brandProducts = Provider.of<Products>(context).findByBrand(brand);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 8, 0, 0),
@@ -212,9 +213,12 @@ class ContentSpace extends StatelessWidget {
           removeTop: true,
           context: context,
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: brandProducts.length,
             itemBuilder: (BuildContext context, int index) =>
-                BrandsNavigationRail(),
+                ChangeNotifierProvider.value(
+              value: brandProducts[index],
+              child: BrandsNavigationRail(),
+            ),
           ),
         ),
       ),
