@@ -21,7 +21,8 @@ class PopularProducts extends StatelessWidget {
         child: Material(
           child: InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed(ProductDetailPage.routeName);
+              Navigator.of(context).pushNamed(ProductDetailPage.routeName,
+                  arguments: productAttribute.id);
             },
             child: Container(
               width: 215,
