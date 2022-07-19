@@ -1,11 +1,16 @@
+import 'package:e_commerse/inner_screens/product_detail_page.dart';
+import 'package:e_commerse/models/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PopularProducts extends StatelessWidget {
-  const PopularProducts({Key? key, this.onTapped}) : super(key: key);
-  final Function()? onTapped;
+  const PopularProducts({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final productAttribute = Provider.of<Product>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
@@ -15,14 +20,16 @@ class PopularProducts extends StatelessWidget {
         ),
         child: Material(
           child: InkWell(
-            onTap: onTapped,
+            onTap: () {
+              Navigator.of(context).pushNamed(ProductDetailPage.routeName);
+            },
             child: Container(
               width: 215,
               child: Stack(
                 children: [
                   GridTile(
                     child: Image.network(
-                      'https://cloudfront-eu-central-1.images.arcpublishing.com/businessoffashion/LT3UDJQBSJCBTJURUJBGJIWKBU.jpg',
+                      productAttribute.imageUrl!,
                       fit: BoxFit.cover,
                     ),
                     footer: Container(
@@ -43,7 +50,7 @@ class PopularProducts extends StatelessWidget {
                               height: 4,
                             ),
                             Text(
-                              'Title',
+                              productAttribute.title!,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -52,7 +59,7 @@ class PopularProducts extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Description',
+                              productAttribute.description!,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Colors.grey[800],
@@ -70,7 +77,7 @@ class PopularProducts extends StatelessWidget {
                     right: 10,
                     child: InkWell(
                       onTap: () {},
-                      child: Icon(Icons.favorite),
+                      child: Icon(Icons.favorite_outline),
                     ),
                   ),
                   Positioned(
@@ -80,7 +87,7 @@ class PopularProducts extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '\$ 12.00',
+                          '\$ ${productAttribute.price}',
                           style: TextStyle(
                             color: Theme.of(context).textSelectionColor,
                           ),
