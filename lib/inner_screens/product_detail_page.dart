@@ -1,11 +1,11 @@
 import 'package:e_commerse/consts/colors.dart';
+import 'package:e_commerse/models/product_model.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:e_commerse/widgets/feeds_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../screens/cart.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -17,6 +17,14 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
+  late final Product product;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    String id = ModalRoute.of(context)!.settings.arguments as String;
+    product = Provider.of<Products>(context).findById(id);
+  }
+
   GlobalKey previewContainer = new GlobalKey();
   Widget _details(bool themeState, String title, String info) {
     return Padding(
@@ -37,7 +45,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               color: themeState
                   ? Theme.of(context).disabledColor
                   : ColorsConsts.subTitle,
-              fontWeight: FontWeight.w100,
+              fontWeight: FontWeight.w500,
               fontSize: 21.0,
             ),
           ),
@@ -60,7 +68,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             height: MediaQuery.of(context).size.height * 0.45,
             width: double.infinity,
             child: Image.network(
-                'https://images.pexels.com/photos/5812887/pexels-photo-5812887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+              product.imageUrl!,
+            ),
           ),
           SingleChildScrollView(
             padding: const EdgeInsets.only(top: 36, bottom: 20.0),
@@ -123,7 +132,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             Container(
                               width: MediaQuery.of(context).size.width * 0.9,
                               child: Text(
-                                'title',
+                                product.title!,
                                 maxLines: 2,
                                 style: TextStyle(
                                   fontSize: 28,
@@ -135,7 +144,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               height: 8,
                             ),
                             Text(
-                              'US \$ 15',
+                              'US \$ ${product.price}',
                               style: TextStyle(
                                 fontSize: 21,
                                 color: themeState.darkTheme
@@ -147,23 +156,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 3.0,
-                      ),
                       Divider(
                         thickness: 1,
                         color: Colors.grey,
-                        height: 1,
+                        height: 3,
                         indent: 8,
                         endIndent: 8,
-                      ),
-                      const SizedBox(
-                        height: 5,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
-                          'US \$ 15',
+                          product.description!,
                           style: TextStyle(
                             fontSize: 21,
                             color: themeState.darkTheme
@@ -173,20 +176,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
                       Divider(
                         thickness: 1,
                         color: Colors.grey,
-                        height: 1,
+                        height: 3,
                         indent: 8,
                         endIndent: 8,
                       ),
-                      _details(themeState.darkTheme, 'Brand', 'BrandName'),
-                      _details(themeState.darkTheme, 'Quantity', '12 Left'),
-                      _details(themeState.darkTheme, 'Category', 'Cat Name'),
-                      _details(themeState.darkTheme, 'Popularity', 'Popular'),
+                      _details(themeState.darkTheme, 'Brand', product.brand!),
+                      _details(themeState.darkTheme, 'Quantity',
+                          '${product.quantity} Left'),
+                      _details(themeState.darkTheme, 'Category',
+                          product.productCategoryName!),
+                      _details(themeState.darkTheme, 'Popularity',
+                          product.isPopular! ? 'Popular' : 'Barely Known'),
                       const SizedBox(
                         height: 15,
                       ),
