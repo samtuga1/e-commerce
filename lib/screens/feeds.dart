@@ -14,6 +14,10 @@ class Feeds extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     List<Product> products = productsData.products;
+    final routeArgs = ModalRoute.of(context)!.settings.arguments as String;
+    if (routeArgs == 'popular') {
+      products = productsData.getPopuplarProducts;
+    }
     return Scaffold(
         body: SafeArea(
       child: MasonryGridView.count(
