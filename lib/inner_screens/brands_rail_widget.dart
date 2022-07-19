@@ -1,10 +1,16 @@
+import 'package:e_commerse/inner_screens/product_detail_page.dart';
+import 'package:e_commerse/models/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BrandsNavigationRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final brandProducts = Provider.of<Product>(context);
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(ProductDetailPage.routeName);
+      },
       child: Container(
         padding: EdgeInsets.only(left: 5.0, right: 5.0),
         margin: EdgeInsets.only(right: 20.0, bottom: 5, top: 18),
@@ -18,15 +24,16 @@ class BrandsNavigationRail extends StatelessWidget {
                   color: Theme.of(context).backgroundColor,
                   image: DecorationImage(
                       image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4PdHtXka2-bDDww6Nuect3Mt9IwpE4v4HNw&usqp=CAU',
+                        brandProducts.imageUrl!,
                       ),
                       fit: BoxFit.contain),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(2.0, 2.0),
-                        blurRadius: 2.0)
+                      color: Colors.grey,
+                      offset: Offset(2.0, 2.0),
+                      blurRadius: 2.0,
+                    )
                   ],
                 ),
               ),
@@ -37,8 +44,9 @@ class BrandsNavigationRail extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0)),
+                      bottomRight: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
+                    ),
                     boxShadow: [
                       BoxShadow(
                           color: Colors.grey,
@@ -51,17 +59,18 @@ class BrandsNavigationRail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'title',
+                      brandProducts.title!,
                       maxLines: 4,
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).textSelectionColor),
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).textSelectionColor,
+                      ),
                     ),
                     SizedBox(
                       height: 20.0,
                     ),
                     FittedBox(
-                      child: Text('US 16 \$',
+                      child: Text('\$ ${brandProducts.price}',
                           maxLines: 1,
                           style: TextStyle(
                             color: Colors.red,
@@ -71,7 +80,7 @@ class BrandsNavigationRail extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Text('CatergoryName',
+                    Text(brandProducts.productCategoryName!,
                         style: TextStyle(color: Colors.grey, fontSize: 18.0)),
                     SizedBox(
                       height: 20.0,
