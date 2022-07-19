@@ -1,4 +1,3 @@
-import 'package:e_commerse/inner_screens/brands_navigation_rail%20copy.dart';
 import 'package:flutter/material.dart';
 
 class PopularProducts extends StatelessWidget {
