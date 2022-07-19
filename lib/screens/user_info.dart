@@ -1,4 +1,5 @@
 import 'package:e_commerse/providers/theme_provider.dart';
+import 'package:e_commerse/screens/wishlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,19 +35,23 @@ class _UserInfoState extends State<UserInfo> {
     Icons.favorite,
     Icons.chevron_right_rounded,
     Icons.book,
+    Icons.shopping_bag,
   ];
 
-  Widget userListTile(
-      int iconIndex, String title, String subtitle, BuildContext context) {
+  Widget userListTile(int iconIndex, String title, String subtitle,
+      BuildContext context, int? trailingIconIndex, Function() onTap) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         splashColor: Theme.of(context).splashColor,
         child: ListTile(
           leading: Icon(_userTileIcons[iconIndex]),
           title: Text(title),
           subtitle: Text(subtitle),
+          trailing: trailingIconIndex != null
+              ? Icon(_userTileIcons[trailingIconIndex])
+              : null,
         ),
       ),
     );
@@ -170,18 +175,21 @@ class _UserInfoState extends State<UserInfo> {
                   child: titles('User Bag'),
                 ),
                 Divider(),
-                userListTile(5, 'Wishlist', '', context),
-                userListTile(6, 'Cart', '', context),
-                userListTile(7, 'My orders', '', context),
+                userListTile(5, 'Wishlist', '', context, 6, () {
+                  Navigator.of(context).pushNamed(WishlistScreen.routeName);
+                }),
+                userListTile(8, 'Cart', '', context, 6, () {}),
+                userListTile(7, 'My orders', '', context, 6, () {}),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: titles('User Information'),
                 ),
                 Divider(),
-                userListTile(0, 'Email', 'Email sub', context),
-                userListTile(1, 'Phone', '', context),
-                userListTile(2, 'Shipping address', '344', context),
-                userListTile(3, 'Joined date', '4/4/4', context),
+                userListTile(0, 'Email', 'Email sub', context, null, () {}),
+                userListTile(1, 'Phone', '', context, null, () {}),
+                userListTile(
+                    2, 'Shipping address', '344', context, null, () {}),
+                userListTile(3, 'Joined date', '4/4/4', context, null, () {}),
                 titles('User Settings'),
                 Divider(),
                 ListTile(
@@ -208,7 +216,7 @@ class _UserInfoState extends State<UserInfo> {
                     //   },
                     // ),
                     ),
-                userListTile(4, 'Logout', '', context),
+                userListTile(4, 'Logout', '', context, null, () {}),
               ],
             ),
           )
