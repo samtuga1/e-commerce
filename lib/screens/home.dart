@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   List _pages = [
     HomeHome(),
     Feeds(),
-    Cart(),
+    CartScreen(),
     Container(),
     Container(),
   ];
