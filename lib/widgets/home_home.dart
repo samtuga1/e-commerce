@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerse/providers/product_provider.dart';
+import 'package:e_commerse/providers/wishlist_provider.dart';
 import 'package:e_commerse/screens/feeds.dart';
 import 'package:e_commerse/widgets/category.dart';
 import 'package:e_commerse/widgets/popular_products.dart';
@@ -163,8 +164,15 @@ class HomeHome extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: productsData.getPopuplarProducts.length,
               itemBuilder: (BuildContext context, int index) {
-                return ChangeNotifierProvider.value(
-                  value: productsData.getPopuplarProducts[index],
+                return MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider.value(
+                      value: productsData.getPopuplarProducts[index],
+                    ),
+                    // ChangeNotifierProvider(
+                    //   create: (ctx) => WishListProvider(),
+                    // ),
+                  ],
                   child: PopularProducts(),
                 );
               },
