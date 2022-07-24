@@ -6,6 +6,7 @@ import 'package:e_commerse/widgets/feeds_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/carts_provider.dart';
+import '../providers/wishlist_provider.dart';
 import '../screens/cart.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -53,6 +54,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final cartData = Provider.of<CartProvider>(context);
     final themeState = Provider.of<DarkThemeProvider>(context);
     final productsData = Provider.of<Products>(context);
+    final favsListData = Provider.of<WishListProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -379,12 +381,24 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         : ColorsConsts.subTitle,
                     child: InkWell(
                       splashColor: ColorsConsts.favColor,
-                      onTap: () {},
+                      onTap: () {
+                        favsListData.addAndRemoveFav(
+                          product.id!,
+                          product.title!,
+                          product.price!,
+                          product.imageUrl!,
+                        );
+                      },
                       child: Center(
-                        child: Icon(
-                          Icons.favorite_outline,
-                          color: ColorsConsts.white,
-                        ),
+                        child: favsListData.favsLists.containsKey(product.id!)
+                            ? Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : Icon(
+                                Icons.favorite_outline,
+                                color: ColorsConsts.white,
+                              ),
                       ),
                     ),
                   ),
