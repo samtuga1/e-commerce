@@ -1,29 +1,28 @@
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/cart_model.dart';
+import 'package:e_commerse/providers/carts_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../consts/colors.dart';
 import '../providers/theme_provider.dart';
+import '../services/global_methods.dart';
 
-class CartFull extends StatefulWidget {
+class CartFull extends StatelessWidget {
   final String prodId;
   CartFull({
     required this.prodId,
   });
-  @override
-  _CartFullState createState() => _CartFullState();
-}
 
-class _CartFullState extends State<CartFull> {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     final cartAttributes = Provider.of<Cart>(context);
-    print(cartAttributes.title);
+    final cartData = Provider.of<CartProvider>(context);
+    GlobalMethods globalMethods = GlobalMethods();
     return InkWell(
       onTap: () => Navigator.of(context)
-          .pushNamed(ProductDetailPage.routeName, arguments: widget.prodId),
+          .pushNamed(ProductDetailPage.routeName, arguments: prodId),
       child: Container(
         height: 135,
         margin: const EdgeInsets.all(10),
@@ -43,7 +42,6 @@ class _CartFullState extends State<CartFull> {
                   image: NetworkImage(
                     cartAttributes.imageUrl!,
                   ),
-                  fit: BoxFit.fill,
                 ),
               ),
             ),
@@ -69,7 +67,15 @@ class _CartFullState extends State<CartFull> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(32.0),
                             // splashColor: ,
-                            onTap: () {},
+                            onTap: () {
+                              globalMethods.showDialogg(
+                                'Remove product',
+                                'This product will be removed from cart',
+                                () => cartData.deletecartItem(prodId),
+                                context,
+                              );
+                              //cartData.deletecartItem(widget.prodId);
+                            },
                             child: Container(
                               height: 50,
                               width: 50,
@@ -103,7 +109,7 @@ class _CartFullState extends State<CartFull> {
                           width: 5,
                         ),
                         Text(
-                          '${cartAttributes.price! * cartAttributes.quantity!}\$',
+                          '${(cartAttributes.price! * cartAttributes.quantity!).toStringAsFixed(2)}\$',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -127,14 +133,24 @@ class _CartFullState extends State<CartFull> {
                           color: Colors.transparent,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(4.0),
-                            // splashColor: ,
-                            onTap: () {},
+                            onTap: cartAttributes.quantity! < 2
+                                ? () {}
+                                : () {
+                                    cartData.decreaseItemByOne(
+                                      prodId,
+                                      cartAttributes.title!,
+                                      cartAttributes.price!,
+                                      cartAttributes.imageUrl!,
+                                    );
+                                  },
                             child: Container(
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Icon(
                                   Icons.remove,
-                                  color: Colors.red,
+                                  color: cartAttributes.quantity! < 2
+                                      ? Colors.green
+                                      : Colors.red,
                                   size: 22,
                                 ),
                               ),
@@ -165,7 +181,14 @@ class _CartFullState extends State<CartFull> {
                           color: Colors.transparent,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(4.0),
-                            onTap: () {},
+                            onTap: () {
+                              cartData.addItemToCart(
+                                prodId,
+                                cartAttributes.title!,
+                                cartAttributes.price!,
+                                cartAttributes.imageUrl!,
+                              );
+                            },
                             child: Container(
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
