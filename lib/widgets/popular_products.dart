@@ -1,16 +1,23 @@
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/product_model.dart';
+import 'package:e_commerse/providers/carts_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PopularProducts extends StatelessWidget {
+class PopularProducts extends StatefulWidget {
   const PopularProducts({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<PopularProducts> createState() => _PopularProductsState();
+}
+
+class _PopularProductsState extends State<PopularProducts> {
+  @override
   Widget build(BuildContext context) {
     final productAttribute = Provider.of<Product>(context);
+    final cartData = Provider.of<CartProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
@@ -37,9 +44,23 @@ class PopularProducts extends StatelessWidget {
                       height: 80,
                       child: GridTileBar(
                         trailing: IconButton(
-                          onPressed: () {},
+                          onPressed: cartData.cartItems
+                                  .containsKey(productAttribute.id!)
+                              ? () {}
+                              : () {
+                                  cartData.addItemToCart(
+                                    productAttribute.id!,
+                                    productAttribute.title!,
+                                    productAttribute.price!,
+                                    productAttribute.imageUrl!,
+                                  );
+                                  setState(() {});
+                                },
                           icon: Icon(
-                            Icons.add_shopping_cart,
+                            !cartData.cartItems
+                                    .containsKey(productAttribute.id!)
+                                ? Icons.add_shopping_cart
+                                : Icons.check,
                             color: Colors.black,
                           ),
                         ),
