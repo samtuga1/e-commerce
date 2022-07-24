@@ -1,9 +1,15 @@
 import 'package:e_commerse/models/wishlist_model.dart';
+import 'package:e_commerse/providers/wishlist_provider.dart';
+import 'package:e_commerse/services/global_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../consts/colors.dart';
 
 class WishListItem extends StatefulWidget {
+  final String favItemId;
+  WishListItem({
+    required this.favItemId,
+  });
   @override
   _WishListItemState createState() => _WishListItemState();
 }
@@ -12,6 +18,8 @@ class _WishListItemState extends State<WishListItem> {
   @override
   Widget build(BuildContext context) {
     final prodAttr = Provider.of<WishList>(context);
+    final wishListData = Provider.of<WishListProvider>(context);
+    GlobalMethods globalMethods = GlobalMethods();
     return Stack(
       children: <Widget>[
         Container(
@@ -62,12 +70,19 @@ class _WishListItemState extends State<WishListItem> {
             ),
           ),
         ),
-        positionedRemove(),
+        positionedRemove(() {
+          globalMethods.showDialogg(
+            'Remove wishlist',
+            'This product will be removed from wishlists',
+            () => wishListData.deleteWishlist(widget.favItemId),
+            context,
+          );
+        }),
       ],
     );
   }
 
-  Widget positionedRemove() {
+  Widget positionedRemove(Function() fxn) {
     return Positioned(
       top: 20,
       right: 15,
@@ -83,7 +98,7 @@ class _WishListItemState extends State<WishListItem> {
             Icons.clear,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: fxn,
         ),
       ),
     );
