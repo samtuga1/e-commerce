@@ -1,6 +1,7 @@
 import 'package:e_commerse/consts/theme_data.dart';
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/dark_theme_sharedpreference.dart';
+import 'package:e_commerse/providers/carts_provider.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/cart.dart';
@@ -47,6 +48,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => Products(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        )
       ],
       child: Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
         return MaterialApp(
