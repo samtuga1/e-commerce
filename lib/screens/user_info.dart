@@ -1,4 +1,5 @@
 import 'package:e_commerse/providers/theme_provider.dart';
+import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -178,7 +179,9 @@ class _UserInfoState extends State<UserInfo> {
                 userListTile(5, 'Wishlist', '', context, 6, () {
                   Navigator.of(context).pushNamed(WishlistScreen.routeName);
                 }),
-                userListTile(8, 'Cart', '', context, 6, () {}),
+                userListTile(8, 'Cart', '', context, 6, () {
+                  Navigator.of(context).pushNamed(CartScreen.routeName);
+                }),
                 userListTile(7, 'My orders', '', context, 6, () {}),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
