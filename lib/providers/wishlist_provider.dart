@@ -26,4 +26,9 @@ class WishListProvider with ChangeNotifier {
     _favsLists.remove(prodId);
     notifyListeners();
   }
+
+  void clearWishLists() {
+    _favsLists.clear();
+    notifyListeners();
+  }
 }
