@@ -14,7 +14,7 @@ class Feeds extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     List<Product> products = productsData.products;
-    final routeArgs = ModalRoute.of(context)!.settings.arguments as String;
+    final routeArgs = ModalRoute.of(context)?.settings.arguments;
     if (routeArgs == 'popular') {
       products = productsData.getPopuplarProducts;
     }
