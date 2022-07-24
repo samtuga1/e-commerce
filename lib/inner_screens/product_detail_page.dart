@@ -318,16 +318,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(side: BorderSide.none),
                       color: Colors.redAccent.shade400,
-                      onPressed: () {
-                        cartData.addItemToCart(
-                          product.id!,
-                          product.title!,
-                          product.price!,
-                          product.imageUrl!,
-                        );
-                      },
+                      onPressed: cartData.cartItems.containsKey(product.id)
+                          ? () {}
+                          : () {
+                              cartData.addItemToCart(
+                                product.id!,
+                                product.title!,
+                                product.price!,
+                                product.imageUrl!,
+                              );
+                            },
                       child: Text(
-                        'ADD TO CART',
+                        cartData.cartItems.containsKey(product.id)
+                            ? 'In Cart'
+                            : 'ADD TO CART',
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.white,
