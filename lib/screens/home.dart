@@ -2,6 +2,7 @@ import 'package:backdrop/backdrop.dart';
 import 'package:e_commerse/consts/colors.dart';
 import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/feeds.dart';
+import 'package:e_commerse/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import '../widgets/home_home.dart';
 
@@ -18,7 +19,7 @@ class _HomeState extends State<Home> {
     HomeHome(),
     Feeds(),
     CartScreen(),
-    Container(),
+    WishlistScreen(),
     Container(),
   ];
   @override
