@@ -1,11 +1,11 @@
 import 'package:e_commerse/consts/colors.dart';
-import 'package:e_commerse/models/product_model.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:e_commerse/widgets/feeds_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../providers/carts_provider.dart';
 import '../screens/cart.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -17,14 +17,6 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  late final Product product;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    String id = ModalRoute.of(context)!.settings.arguments as String;
-    product = Provider.of<Products>(context).findById(id);
-  }
-
   GlobalKey previewContainer = new GlobalKey();
   Widget _details(bool themeState, String title, String info) {
     return Padding(
@@ -56,6 +48,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    String id = ModalRoute.of(context)!.settings.arguments as String;
+    final product = Provider.of<Products>(context).findById(id);
+    final cartData = Provider.of<CartProvider>(context);
     final themeState = Provider.of<DarkThemeProvider>(context);
     final productsData = Provider.of<Products>(context);
     return Scaffold(
@@ -323,7 +318,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(side: BorderSide.none),
                       color: Colors.redAccent.shade400,
-                      onPressed: () {},
+                      onPressed: () {
+                        cartData.addItemToCart(
+                          product.id!,
+                          product.title!,
+                          product.price!,
+                          product.imageUrl!,
+                        );
+                      },
                       child: Text(
                         'ADD TO CART',
                         style: TextStyle(
