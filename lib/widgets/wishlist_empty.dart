@@ -1,3 +1,4 @@
+import 'package:e_commerse/screens/feeds.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../consts/colors.dart';
@@ -49,7 +50,9 @@ class WishlistEmpty extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.06,
           child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(Feeds.routeName);
+            },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
               side: BorderSide(color: Colors.red),
@@ -59,9 +62,10 @@ class WishlistEmpty extends StatelessWidget {
               'Add a wish'.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Theme.of(context).textSelectionColor,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w600),
+                color: Theme.of(context).textSelectionColor,
+                fontSize: 26,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
