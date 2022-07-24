@@ -26,9 +26,14 @@ class CartScreen extends StatelessWidget {
             body: Container(
               margin: EdgeInsets.only(bottom: 60),
               child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: cartData.cartItems.values.length,
                   itemBuilder: (BuildContext ctx, int index) {
-                    return CartFull();
+                    return ChangeNotifierProvider.value(
+                      value: cartData.cartItems.values.toList()[index],
+                      child: CartFull(
+                        prodId: cartData.cartItems.keys.toList()[index],
+                      ),
+                    );
                   }),
             ),
           );
