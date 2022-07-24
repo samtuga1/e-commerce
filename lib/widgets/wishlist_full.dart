@@ -1,4 +1,6 @@
+import 'package:e_commerse/models/wishlist_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../consts/colors.dart';
 
 class WishListItem extends StatefulWidget {
@@ -9,6 +11,7 @@ class WishListItem extends StatefulWidget {
 class _WishListItemState extends State<WishListItem> {
   @override
   Widget build(BuildContext context) {
+    final prodAttr = Provider.of<WishList>(context);
     return Stack(
       children: <Widget>[
         Container(
@@ -27,7 +30,8 @@ class _WishListItemState extends State<WishListItem> {
                     Container(
                       height: 80,
                       child: Image.network(
-                          'https://abong.com.bd/public//admin/media/2020/03/yellow_mesh_men_sport_sneaker_shoesjpeg_20200307141459.jpeg'),
+                        prodAttr.imageUrl,
+                      ),
                     ),
                     SizedBox(
                       width: 10.0,
@@ -37,7 +41,7 @@ class _WishListItemState extends State<WishListItem> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'title',
+                            prodAttr.title,
                             style: TextStyle(
                                 fontSize: 16.0, fontWeight: FontWeight.bold),
                           ),
@@ -45,7 +49,7 @@ class _WishListItemState extends State<WishListItem> {
                             height: 20.0,
                           ),
                           Text(
-                            "\$ 16",
+                            "\$ ${prodAttr.price}",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18.0),
                           ),
