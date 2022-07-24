@@ -23,7 +23,9 @@ class WishlistScreen extends StatelessWidget {
               itemCount: favsListData.favsLists.length,
               itemBuilder: (context, index) => ChangeNotifierProvider.value(
                 value: favsListData.favsLists.values.toList()[index],
-                child: WishListItem(),
+                child: WishListItem(
+                  favItemId: favsListData.favsLists.keys.toList()[index],
+                ),
               ),
             ),
           );
