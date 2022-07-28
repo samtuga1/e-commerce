@@ -609,4 +609,12 @@ class Products with ChangeNotifier {
     return _products
         .firstWhere((product) => product.id!.toLowerCase() == id.toLowerCase());
   }
+
+  List<Product> searchQuery(String searchText) {
+    List<Product> searchItems = _products
+        .where((product) =>
+            product.title!.toLowerCase() == searchText.toLowerCase())
+        .toList();
+    return searchItems;
+  }
 }
