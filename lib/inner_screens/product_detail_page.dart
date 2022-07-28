@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:e_commerse/consts/colors.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
@@ -291,18 +292,42 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   onPressed: () {
                     Navigator.of(context).pushNamed(WishlistScreen.routeName);
                   },
-                  icon: Icon(
-                    Icons.favorite_outline,
-                    color: ColorsConsts.favColor,
+                  icon: Consumer<WishListProvider>(
+                    builder: (_, favs, ch) => Badge(
+                      badgeColor: ColorsConsts.favBadgeColor,
+                      animationType: BadgeAnimationType.slide,
+                      toAnimate: true,
+                      position: BadgePosition.topEnd(),
+                      badgeContent: Text(
+                        favs.favsLists.length.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: Icon(
+                        Icons.favorite,
+                        color: ColorsConsts.favColor,
+                      ),
+                    ),
                   ),
                 ),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(CartScreen.routeName);
                   },
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: ColorsConsts.cartColor,
+                  icon: Consumer<CartProvider>(
+                    builder: (_, carts, ch) => Badge(
+                      badgeColor: ColorsConsts.cartBadgeColor,
+                      animationType: BadgeAnimationType.slide,
+                      toAnimate: true,
+                      position: BadgePosition.topEnd(),
+                      badgeContent: Text(
+                        carts.cartItems.length.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: Icon(
+                        Icons.shopping_cart,
+                        color: ColorsConsts.cartColor,
+                      ),
+                    ),
                   ),
                 )
               ],
