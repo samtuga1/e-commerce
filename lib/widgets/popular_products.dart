@@ -19,7 +19,7 @@ class _PopularProductsState extends State<PopularProducts> {
   Widget build(BuildContext context) {
     final productAttribute = Provider.of<Product>(context);
     final cartData = Provider.of<CartProvider>(context, listen: false);
-    //final wishListData = Provider.of<WishListProvider>(context);
+    final wishListData = Provider.of<WishListProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
@@ -100,15 +100,14 @@ class _PopularProductsState extends State<PopularProducts> {
                     top: 3,
                     right: 10,
                     child: InkWell(
-                      onTap: () {
-                        // wishListData.addWishListItem(
-                        //   productAttribute.id!,
-                        //   productAttribute.title!,
-                        //   productAttribute.price!,
-                        //   productAttribute.imageUrl!,
-                        // );
-                      },
-                      child: Icon(Icons.favorite),
+                      onTap: () {},
+                      child: Icon(
+                        Icons.favorite,
+                        color: wishListData.favsLists
+                                .containsKey(productAttribute.id)
+                            ? Colors.red
+                            : Colors.white,
+                      ),
                     ),
                   ),
                   Positioned(
