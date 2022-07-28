@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/product_model.dart';
+import 'package:e_commerse/widgets/feeds.dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -102,7 +103,14 @@ class _FeedProductsState extends State<FeedProducts> {
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => FeedDialog(
+                                  productId: productAttributes.id!,
+                                ),
+                              );
+                            },
                             borderRadius: BorderRadius.circular(18.0),
                             child: Icon(
                               Icons.more_horiz,
