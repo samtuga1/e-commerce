@@ -32,7 +32,7 @@ class WishlistScreen extends StatelessWidget {
                     //cartData.deletecartItem(widget.prodId);
                   },
                   icon: Icon(
-                    Icons.remove_outlined,
+                    Icons.remove_shopping_cart,
                     color: Colors.red,
                   ),
                 ),
