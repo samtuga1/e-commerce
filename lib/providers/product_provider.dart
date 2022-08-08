@@ -611,10 +611,10 @@ class Products with ChangeNotifier {
   }
 
   List<Product> searchQuery(String searchText) {
-    List<Product> searchItems = _products
+    List<Product> _searchItems = _products
         .where((product) =>
-            product.title!.toLowerCase() == searchText.toLowerCase())
+            product.title!.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
-    return searchItems;
+    return _searchItems;
   }
 }
