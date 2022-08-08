@@ -1,6 +1,5 @@
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import '../consts/colors.dart';
 import '../models/product_model.dart';
@@ -98,7 +97,7 @@ class _SearchState extends State<Search> {
                               _searchTextController.clear();
                               _node.unfocus();
                             },
-                      icon: Icon(Feather.x,
+                      icon: Icon(Icons.clear,
                           color: _searchTextController.text.isNotEmpty
                               ? Colors.red
                               : Colors.grey),
@@ -106,6 +105,7 @@ class _SearchState extends State<Search> {
                   ),
                   onChanged: (value) {
                     _searchTextController.text.toLowerCase();
+                    print(value);
                     setState(() {
                       _searchList = productsData.searchQuery(value);
                     });
@@ -122,7 +122,7 @@ class _SearchState extends State<Search> {
                         height: 50,
                       ),
                       Icon(
-                        Feather.search,
+                        Icons.search,
                         size: 60,
                       ),
                       SizedBox(
