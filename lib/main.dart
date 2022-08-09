@@ -5,6 +5,8 @@ import 'package:e_commerse/providers/carts_provider.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/providers/wishlist_provider.dart';
+import 'package:e_commerse/screens/auth/login.dart';
+import 'package:e_commerse/screens/auth/sign_up.dart';
 import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/feeds.dart';
 import 'package:e_commerse/screens/landing_page.dart';
@@ -71,6 +73,8 @@ class _MyAppState extends State<MyApp> {
             CartScreen.routeName: (context) => CartScreen(),
             Feeds.routeName: (context) => Feeds(),
             CategoryFeedsScreen.routeName: (context) => CategoryFeedsScreen(),
+            LoginScreen.routeName: (context) => LoginScreen(),
+            SignUpScreen.routeName: (context) => SignUpScreen(),
           },
         );
       }),
