@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
-
 import '../../consts/colors.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _password = '';
   String _fullName = '';
   int? _phoneNumber;
+  File? _pickedImage;
   final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
@@ -34,6 +37,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (isValid) {
       _formKey.currentState!.save();
     }
+  }
+
+  void _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: source);
+    final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      _pickedImage = pickedImageFile;
+    });
+  }
+
+  void _removeImage() {
+    setState(() {
+      _pickedImage = null;
+    });
   }
 
   @override
@@ -68,9 +86,139 @@ class _SignUpScreenState extends State<SignUpScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 30,
-                ),
+                Stack(children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 30, horizontal: 30),
+                    child: CircleAvatar(
+                      backgroundColor: ColorsConsts.gradiendLEnd,
+                      radius: 70,
+                      child: CircleAvatar(
+                        radius: 65,
+                        backgroundImage: _pickedImage == null
+                            ? null
+                            : FileImage(_pickedImage!),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text(
+                              'Choose option',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: ColorsConsts.gradiendLStart,
+                              ),
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    _pickImage(ImageSource.camera);
+                                    Navigator.of(context).pop();
+                                  },
+                                  splashColor: Colors.purpleAccent,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.camera,
+                                          color: Colors.purpleAccent,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          'Camera',
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            color: ColorsConsts.title,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _pickImage(ImageSource.gallery);
+                                    Navigator.of(context).pop();
+                                  },
+                                  splashColor: Colors.purpleAccent,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.image,
+                                          color: Colors.purpleAccent,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          'Gallery',
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            color: ColorsConsts.title,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _removeImage();
+                                    Navigator.of(context).pop();
+                                  },
+                                  splashColor: Colors.purpleAccent,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.remove_circle,
+                                            color: Colors.red),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          'Remove',
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      fillColor: ColorsConsts.gradiendLEnd,
+                      child: Icon(Icons.add_a_photo),
+                      padding: const EdgeInsets.all(15),
+                      shape: CircleBorder(),
+                    ),
+                    top: 110,
+                    left: 110,
+                  )
+                ]),
                 Form(
                     key: _formKey,
                     child: Column(
