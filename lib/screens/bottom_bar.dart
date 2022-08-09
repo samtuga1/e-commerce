@@ -6,6 +6,7 @@ import 'feeds.dart';
 import 'home.dart';
 
 class BottomBarScreen extends StatefulWidget {
+  static const routeName = '/bottom_bar';
   @override
   _BottomBarScreenState createState() => _BottomBarScreenState();
 }
