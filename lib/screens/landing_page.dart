@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerse/screens/auth/login.dart';
 import 'package:e_commerse/screens/auth/sign_up.dart';
+import 'package:e_commerse/screens/bottom_bar.dart';
+import 'package:e_commerse/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/colors.dart';
@@ -222,7 +224,9 @@ class _LandingPageState extends State<LandingPage>
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(MainScreen.routeName);
+                },
                 child: Text('Sign in as a guest'),
               ),
             ],
