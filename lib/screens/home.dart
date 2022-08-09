@@ -1,5 +1,6 @@
 import 'package:backdrop/backdrop.dart';
 import 'package:e_commerse/consts/colors.dart';
+import 'package:e_commerse/inner_screens/upload_product_form.dart';
 import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/feeds.dart';
 import 'package:e_commerse/screens/wishlist.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
     Feeds(),
     CartScreen(),
     WishlistScreen(),
-    Container(),
+    UploadProductForm(),
   ];
   @override
   Widget build(BuildContext context) {
