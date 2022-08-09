@@ -219,7 +219,11 @@ class _UserInfoState extends State<UserInfo> {
                     //   },
                     // ),
                     ),
-                userListTile(4, 'Logout', '', context, null, () {}),
+                userListTile(4, 'Logout', '', context, null, () {
+                  Navigator.canPop(context)
+                      ? Navigator.of(context).pop()
+                      : null;
+                }),
               ],
             ),
           )
