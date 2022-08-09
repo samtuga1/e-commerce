@@ -94,6 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       backgroundColor: ColorsConsts.gradiendLEnd,
                       radius: 70,
                       child: CircleAvatar(
+                        backgroundColor: ColorsConsts.gradiendFEnd,
                         radius: 65,
                         backgroundImage: _pickedImage == null
                             ? null
