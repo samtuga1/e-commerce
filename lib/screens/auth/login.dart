@@ -36,9 +36,15 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = true;
       });
       try {
-        await _auth.signInWithEmailAndPassword(
-            email: _emailAddress.toLowerCase().trim(),
-            password: _password.trim());
+        await _auth
+            .signInWithEmailAndPassword(
+                email: _emailAddress.toLowerCase().trim(),
+                password: _password.trim())
+            .then((value) => {
+                  Navigator.of(context).canPop()
+                      ? Navigator.of(context).pop()
+                      : null,
+                });
       } on FirebaseException catch (error) {
         _globalMethods.authErrorHandle(error.message.toString(), context);
       } finally {
