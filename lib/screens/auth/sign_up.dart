@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:e_commerse/services/global_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,6 +36,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  GlobalMethods _globalMethods = GlobalMethods();
+
   void _submitForm() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -44,7 +47,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await _auth.createUserWithEmailAndPassword(
             email: _emailAddress.toLowerCase().trim(),
             password: _password.trim());
-      } catch (error) {
+      } on FirebaseException catch (error) {
+        _globalMethods.authErrorHandle(error.message.toString(), context);
         print(error);
       }
     }
