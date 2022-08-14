@@ -1,6 +1,7 @@
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/wishlist.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class _UserInfoState extends State<UserInfo> {
   double top = 0.0;
   String? _name;
   String? _userImage;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   final List<IconData> _userTileIcons = [
     Icons.email,
@@ -220,9 +222,10 @@ class _UserInfoState extends State<UserInfo> {
                     // ),
                     ),
                 userListTile(4, 'Logout', '', context, null, () {
-                  Navigator.canPop(context)
-                      ? Navigator.of(context).pop()
-                      : null;
+                  // Navigator.canPop(context)
+                  //     ? Navigator.of(context).pop()
+                  //     : null;
+                  auth.signOut();
                 }),
               ],
             ),
