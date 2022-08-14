@@ -20,6 +20,9 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
+# dependency_overrides:
+#   firebase_core_platform_interface: 4.4.1
+
 dependencies:
   flutter:
     sdk: flutter
@@ -38,6 +41,8 @@ dependencies:
   cached_network_image: ^3.2.1
   wave: ^0.2.2
   image_picker: ^0.8.5+3
+  firebase_core: ^1.19.1
+  firebase_auth: ^3.6.3
 
 dev_dependencies:
   flutter_test:
