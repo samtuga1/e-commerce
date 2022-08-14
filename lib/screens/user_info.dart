@@ -1,6 +1,7 @@
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/wishlist.dart';
+import 'package:e_commerse/services/global_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _UserInfoState extends State<UserInfo> {
   String? _name;
   String? _userImage;
   final FirebaseAuth auth = FirebaseAuth.instance;
+  GlobalMethods _globalMethods = GlobalMethods();
 
   final List<IconData> _userTileIcons = [
     Icons.email,
@@ -225,7 +227,8 @@ class _UserInfoState extends State<UserInfo> {
                   // Navigator.canPop(context)
                   //     ? Navigator.of(context).pop()
                   //     : null;
-                  auth.signOut();
+                  _globalMethods.showLogoutDialog(
+                      () => auth.signOut(), context);
                 }),
               ],
             ),
