@@ -1,6 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -23,6 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   int? _phoneNumber;
   File? _pickedImage;
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void dispose() {
     _passwordFocusNode.dispose();
@@ -31,11 +35,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
+      try {
+        await _auth.createUserWithEmailAndPassword(
+            email: _emailAddress.toLowerCase().trim(),
+            password: _password.trim());
+      } catch (error) {
+        print(error);
+      }
     }
   }
 
