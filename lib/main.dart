@@ -14,6 +14,7 @@ import 'package:e_commerse/screens/feeds.dart';
 import 'package:e_commerse/screens/landing_page.dart';
 import 'package:e_commerse/screens/main_screen.dart';
 import 'package:e_commerse/screens/user_info.dart';
+import 'package:e_commerse/screens/user_state.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,7 @@ class _MyAppState extends State<MyApp> {
               return MaterialApp(
                 title: 'Flutter Demo',
                 theme: Styles.themeData(themeData.darkTheme, context),
-                home: LandingPage(),
+                home: UserState(),
                 routes: {
                   UserInfo.routeName: (context) => UserInfo(),
                   BrandNavigationRailScreen.routeName: (context) =>
