@@ -1,5 +1,4 @@
 import 'package:e_commerse/inner_screens/upload_product_form.dart';
-import 'landing_page.dart';
 import 'package:flutter/material.dart';
 import 'bottom_bar.dart';
 
@@ -11,7 +10,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       children: [
-        LandingPage(),
+        BottomBarScreen(),
         UploadProductForm(),
       ],
     );
