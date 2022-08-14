@@ -26,8 +26,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _fullName = '';
   int? _phoneNumber;
   File? _pickedImage;
-  final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  GlobalMethods _globalMethods = GlobalMethods();
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     _passwordFocusNode.dispose();
@@ -36,20 +39,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  GlobalMethods _globalMethods = GlobalMethods();
-
   void _submitForm() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
+      setState(() {
+        isLoading = true;
+      });
       try {
         await _auth.createUserWithEmailAndPassword(
             email: _emailAddress.toLowerCase().trim(),
             password: _password.trim());
       } on FirebaseException catch (error) {
         _globalMethods.authErrorHandle(error.message.toString(), context);
-        print(error);
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
@@ -355,35 +362,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             SizedBox(width: 10),
-                            ElevatedButton(
-                                style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    side: BorderSide(
-                                        color: ColorsConsts.backgroundColor),
-                                  ),
-                                )),
-                                onPressed: _submitForm,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Sign up',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 17),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
-                                      Icons.person,
-                                      size: 18,
-                                    )
-                                  ],
-                                )),
+                            isLoading
+                                ? CircularProgressIndicator()
+                                : ElevatedButton(
+                                    style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        side: BorderSide(
+                                            color:
+                                                ColorsConsts.backgroundColor),
+                                      ),
+                                    )),
+                                    onPressed: _submitForm,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Sign up',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 17),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Icon(
+                                          Icons.person,
+                                          size: 18,
+                                        )
+                                      ],
+                                    )),
                             SizedBox(width: 20),
                           ],
                         ),
