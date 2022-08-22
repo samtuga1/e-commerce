@@ -1,9 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerse/services/global_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,27 +45,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
     var date = DateTime.now().toString();
     var dateparse = DateTime.parse(date);
     var formattedDate = '${dateparse.day}-${dateparse.month}-${dateparse.year}';
+    String url = '';
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
-      setState(() {
-        isLoading = true;
-      });
+
+      if (_pickedImage == null) {
+        _globalMethods.authErrorHandle('Please pick an image', context);
+      } else {
+        setState(() {
+          isLoading = true;
+        });
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('userimages')
+            .child(_fullName + '.jpg');
+        await ref.putFile(_pickedImage!);
+        url = await ref.getDownloadURL();
+      }
+
       try {
         await _auth.createUserWithEmailAndPassword(
             email: _emailAddress.toLowerCase().trim(),
             password: _password.trim());
         final user = _auth.currentUser;
         final uid = user?.uid;
-        FirebaseFirestore.instance.collection('users').doc(uid).set({
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
           'id': uid,
           'name': _fullName,
           'email': _emailAddress,
           'phoneNumber': _phoneNumber,
-          'imageUrl': '',
+          'imageUrl': url,
           'joinedAt': formattedDate,
           'createdAt': Timestamp.now(),
         });
+        Navigator.canPop(context) ? Navigator.of(context).pop() : null;
       } on FirebaseException catch (error) {
         _globalMethods.authErrorHandle(error.message.toString(), context);
       } finally {
@@ -351,6 +365,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: TextFormField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
                             key: ValueKey('phone number'),
                             focusNode: _phoneNumberFocusNode,
                             validator: (value) {
