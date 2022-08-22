@@ -53,7 +53,7 @@ class _LandingPageState extends State<LandingPage>
     super.dispose();
   }
 
-  Future<UserCredential> googleSignIn() async {
+  Future<UserCredential?> googleSignIn() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
@@ -65,7 +65,13 @@ class _LandingPageState extends State<LandingPage>
       idToken: googleAuth?.idToken,
     );
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    try {
+      UserCredential _authResult =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      return _authResult;
+    } catch (error) {
+      _globalMethods.authErrorHandle(error.toString(), context);
+    }
   }
 
   @override
