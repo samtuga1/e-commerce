@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerse/services/global_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _submitForm() async {
     final isValid = _formKey.currentState!.validate();
+    var date = DateTime.now().toString();
+    var dateparse = DateTime.parse(date);
+    var formattedDate = '${dateparse.day}-${dateparse.month}-${dateparse.year}';
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
@@ -51,6 +55,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await _auth.createUserWithEmailAndPassword(
             email: _emailAddress.toLowerCase().trim(),
             password: _password.trim());
+        final user = _auth.currentUser;
+        final uid = user?.uid;
+        FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'id': uid,
+          'name': _fullName,
+          'email': _emailAddress,
+          'phoneNumber': _phoneNumber,
+          'imageUrl': '',
+          'joinedAt': formattedDate,
+          'createdAt': Timestamp.now(),
+        });
       } on FirebaseException catch (error) {
         _globalMethods.authErrorHandle(error.message.toString(), context);
       } finally {
