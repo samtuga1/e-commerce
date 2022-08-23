@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerse/screens/auth/login.dart';
 import 'package:e_commerse/screens/auth/sign_up.dart';
 import 'package:e_commerse/screens/bottom_bar.dart';
@@ -21,6 +22,7 @@ class _LandingPageState extends State<LandingPage>
   late Animation<double> _animation;
   GlobalMethods _globalMethods = GlobalMethods();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool isLoading = false;
   List<String> images = [
     'https://media.istockphoto.com/photos/man-at-the-shopping-picture-id868718238?k=6&m=868718238&s=612x612&w=0&h=ZUPCx8Us3fGhnSOlecWIZ68y3H4rCiTnANtnjHk0bvo=',
     'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fdam%2Fimageserve%2F1138257321%2F0x0.jpg%3Ffit%3Dscale',
@@ -54,6 +56,9 @@ class _LandingPageState extends State<LandingPage>
   }
 
   Future<UserCredential?> googleSignIn() async {
+    var date = DateTime.now().toString();
+    var dateparse = DateTime.parse(date);
+    var formattedDate = '${dateparse.day}-${dateparse.month}-${dateparse.year}';
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
@@ -68,9 +73,39 @@ class _LandingPageState extends State<LandingPage>
     try {
       UserCredential _authResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_authResult.user?.uid)
+          .set({
+        'id': _authResult.user?.uid,
+        'name': _authResult.user?.displayName,
+        'email': _authResult.user?.email,
+        'phoneNumber': _authResult.user?.phoneNumber,
+        'imageUrl': _authResult.user?.photoURL,
+        'joinedAt': formattedDate,
+        'createdAt': Timestamp.now(),
+      });
       return _authResult;
     } catch (error) {
       _globalMethods.authErrorHandle(error.toString(), context);
+    }
+  }
+
+  void _loginAnonymously() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      _auth.signInAnonymously();
+    } on FirebaseException catch (error) {
+      _globalMethods.authErrorHandle(error.message.toString(), context);
+    } catch (e) {
+      _globalMethods.authErrorHandle(
+          'Unable to sign in, try again later', context);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -251,7 +286,8 @@ class _LandingPageState extends State<LandingPage>
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(MainScreen.routeName);
+                  _loginAnonymously();
+                  //Navigator.of(context).pushNamed(MainScreen.routeName);
                 },
                 child: Text('Sign in as a guest'),
               ),
