@@ -1,9 +1,14 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerse/services/global_methods.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../consts/colors.dart';
+import 'package:uuid/uuid.dart';
 
 class UploadProductForm extends StatefulWidget {
   static const routeName = '/UploadProductForm';
@@ -14,18 +19,22 @@ class UploadProductForm extends StatefulWidget {
 
 class _UploadProductFormState extends State<UploadProductForm> {
   final _formKey = GlobalKey<FormState>();
+  GlobalMethods _globalMethods = GlobalMethods();
 
+  var uuid = Uuid();
+  bool isLoading = false;
   File? _pickedImage;
-  var _productTitle = '';
-  var _productPrice = '';
-  var _productCategory = '';
-  var _productBrand = '';
-  var _productDescription = '';
-  var _productQuantity = '';
+  String _productTitle = '';
+  String _productPrice = '';
+  String _productCategory = '';
+  String _productBrand = '';
+  String _productDescription = '';
+  String _productQuantity = '';
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _brandController = TextEditingController();
   String? _categoryValue;
   String? _brandValue;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   // File _pickedImage;
   showAlertDialog(BuildContext context, String title, String body) {
@@ -49,19 +58,52 @@ class _UploadProductFormState extends State<UploadProductForm> {
     );
   }
 
-  void _trySubmit() {
+  void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
     if (isValid) {
       _formKey.currentState!.save();
-      print(_productTitle);
-      print(_productPrice);
-      print(_productCategory);
-      print(_productBrand);
-      print(_productDescription);
-      print(_productQuantity);
-      // Use those values to send our auth request ...
+      if (isValid) {
+        _formKey.currentState!.save();
+        try {
+          if (_pickedImage == null) {
+            _globalMethods.authErrorHandle('Please pick an image', context);
+          } else {
+            setState(() {
+              isLoading = true;
+            });
+            final ref = FirebaseStorage.instance
+                .ref()
+                .child('userImages')
+                .child(_productTitle + '.jpg');
+            await ref.putFile(_pickedImage!);
+            final url = await ref.getDownloadURL();
+
+            final user = _auth.currentUser;
+            final uid = user?.uid;
+            final uuid1 = uuid.v4();
+            await FirebaseFirestore.instance.collection('users').doc(uid).set({
+              'userId': uid,
+              'createdAt': Timestamp.now(),
+              'productTitle': _productTitle,
+              'productPrice': _productPrice,
+              'productCategory': _productCategory,
+              'productImage': url,
+              'productBrand': _productBrand,
+              'productDescription': _productDescription,
+              'productQuantity': _productQuantity,
+            });
+            Navigator.canPop(context) ? Navigator.of(context).pop() : null;
+          }
+        } on FirebaseException catch (error) {
+          _globalMethods.authErrorHandle(error.message.toString(), context);
+        } finally {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
     }
   }
 
