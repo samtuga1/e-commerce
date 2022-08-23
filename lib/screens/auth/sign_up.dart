@@ -45,41 +45,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
     var date = DateTime.now().toString();
     var dateparse = DateTime.parse(date);
     var formattedDate = '${dateparse.day}-${dateparse.month}-${dateparse.year}';
-    String url = '';
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
-
-      if (_pickedImage == null) {
-        _globalMethods.authErrorHandle('Please pick an image', context);
-      } else {
-        setState(() {
-          isLoading = true;
-        });
-        final ref = FirebaseStorage.instance
-            .ref()
-            .child('userimages')
-            .child(_fullName + '.jpg');
-        await ref.putFile(_pickedImage!);
-        url = await ref.getDownloadURL();
-      }
-
       try {
-        await _auth.createUserWithEmailAndPassword(
-            email: _emailAddress.toLowerCase().trim(),
-            password: _password.trim());
-        final user = _auth.currentUser;
-        final uid = user?.uid;
-        await FirebaseFirestore.instance.collection('users').doc(uid).set({
-          'id': uid,
-          'name': _fullName,
-          'email': _emailAddress,
-          'phoneNumber': _phoneNumber,
-          'imageUrl': url,
-          'joinedAt': formattedDate,
-          'createdAt': Timestamp.now(),
-        });
-        Navigator.canPop(context) ? Navigator.of(context).pop() : null;
+        if (_pickedImage == null) {
+          _globalMethods.authErrorHandle('Please pick an image', context);
+        } else {
+          setState(() {
+            isLoading = true;
+          });
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child('userimages')
+              .child(_fullName + '.jpg');
+          await ref.putFile(_pickedImage!);
+          final url = await ref.getDownloadURL();
+          await _auth.createUserWithEmailAndPassword(
+              email: _emailAddress.toLowerCase().trim(),
+              password: _password.trim());
+          final user = _auth.currentUser;
+          final uid = user?.uid;
+          await FirebaseFirestore.instance.collection('users').doc(uid).set({
+            'id': uid,
+            'name': _fullName,
+            'email': _emailAddress,
+            'phoneNumber': _phoneNumber,
+            'imageUrl': url,
+            'joinedAt': formattedDate,
+            'createdAt': Timestamp.now(),
+          });
+          Navigator.canPop(context) ? Navigator.of(context).pop() : null;
+        }
       } on FirebaseException catch (error) {
         _globalMethods.authErrorHandle(error.message.toString(), context);
       } finally {
