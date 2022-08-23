@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/wishlist.dart';
@@ -23,13 +24,36 @@ class _UserInfoState extends State<UserInfo> {
     _scrollController.addListener(() {
       setState(() {});
     });
+    getData();
   }
 
   double top = 0.0;
   String? _name;
   String? _userImage;
+  String? _joinedAt;
+  String? _email;
+  int? phoneNumber;
   final FirebaseAuth auth = FirebaseAuth.instance;
+
   GlobalMethods _globalMethods = GlobalMethods();
+
+  void getData() async {
+    final user = auth.currentUser;
+    final _uid = user!.uid;
+    try {
+      final userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+      setState(() {
+        _name = userDoc.get('name') ?? user.displayName;
+        _email = userDoc.get('email') ?? user.email;
+        _joinedAt = userDoc.get('joinedAt');
+        phoneNumber = userDoc.get('phoneNumber');
+        _userImage = userDoc.get('imageUrl') ?? user.photoURL;
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
 
   final List<IconData> _userTileIcons = [
     Icons.email,
@@ -131,7 +155,11 @@ class _UserInfoState extends State<UserInfo> {
                     ),
                   ),
                   child: FlexibleSpaceBar(
-                    background: FlutterLogo(),
+                    background: Image.network(
+                      _userImage ??
+                          'https://monstar-lab.com/global/wp-content/uploads/sites/11/2019/04/male-placeholder-image.jpeg',
+                      fit: BoxFit.cover,
+                    ),
                     centerTitle: true,
                     title: AnimatedOpacity(
                       duration: Duration(milliseconds: 300),
@@ -154,8 +182,10 @@ class _UserInfoState extends State<UserInfo> {
                               ],
                               image: DecorationImage(
                                 fit: BoxFit.fill,
-                                image: NetworkImage(_userImage ??
-                                    'https://post.healthline.com/wp-content/uploads/2020/07/285960-9-Best-Shoe-Brands-for-Bunions_Thumbnail-732x549.jpg'),
+                                image: NetworkImage(
+                                  _userImage ??
+                                      'https://monstar-lab.com/global/wp-content/uploads/sites/11/2019/04/male-placeholder-image.jpeg',
+                                ),
                               ),
                             ),
                           ),
@@ -192,11 +222,14 @@ class _UserInfoState extends State<UserInfo> {
                   child: titles('User Information'),
                 ),
                 Divider(),
-                userListTile(0, 'Email', 'Email sub', context, null, () {}),
-                userListTile(1, 'Phone', '', context, null, () {}),
+                userListTile(
+                    0, 'Email', '${_email ?? ''} ', context, null, () {}),
+                userListTile(
+                    1, 'Phone', '${phoneNumber ?? ''} ', context, null, () {}),
                 userListTile(
                     2, 'Shipping address', '344', context, null, () {}),
-                userListTile(3, 'Joined date', '4/4/4', context, null, () {}),
+                userListTile(3, 'Joined date', '${_joinedAt ?? ' '} ', context,
+                    null, () {}),
                 titles('User Settings'),
                 Divider(),
                 ListTile(
