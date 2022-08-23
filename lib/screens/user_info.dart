@@ -41,8 +41,15 @@ class _UserInfoState extends State<UserInfo> {
     final user = auth.currentUser;
     final _uid = user!.uid;
     try {
-      final userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+      final userDoc = user.isAnonymous
+          ? null
+          : await FirebaseFirestore.instance
+              .collection('users')
+              .doc(_uid)
+              .get();
+      if (userDoc == null) {
+        return;
+      }
       setState(() {
         _name = userDoc.get('name') ?? user.displayName;
         _email = userDoc.get('email') ?? user.email;
