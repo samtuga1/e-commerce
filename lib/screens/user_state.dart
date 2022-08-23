@@ -12,8 +12,10 @@ class UserState extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot userSnapshot) {
         if (userSnapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         } else if (userSnapshot.connectionState == ConnectionState.active) {
           if (userSnapshot.hasData) {
