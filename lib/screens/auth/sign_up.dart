@@ -57,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           });
           final ref = FirebaseStorage.instance
               .ref()
-              .child('userimages')
+              .child('userImages')
               .child(_fullName + '.jpg');
           await ref.putFile(_pickedImage!);
           final url = await ref.getDownloadURL();
@@ -66,6 +66,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               password: _password.trim());
           final user = _auth.currentUser;
           final uid = user?.uid;
+          await user?.updateDisplayName(_fullName);
+          await user?.updateEmail(_emailAddress);
+          await user?.updatePhotoURL(url);
+          await user?.reload();
           await FirebaseFirestore.instance.collection('users').doc(uid).set({
             'id': uid,
             'name': _fullName,
