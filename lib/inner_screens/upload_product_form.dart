@@ -75,15 +75,19 @@ class _UploadProductFormState extends State<UploadProductForm> {
             });
             final ref = FirebaseStorage.instance
                 .ref()
-                .child('userImages')
+                .child('productImages')
                 .child(_productTitle + '.jpg');
             await ref.putFile(_pickedImage!);
             final url = await ref.getDownloadURL();
 
             final user = _auth.currentUser;
             final uid = user?.uid;
-            final uuid1 = uuid.v4();
-            await FirebaseFirestore.instance.collection('users').doc(uid).set({
+            final _productId = uuid.v4();
+            await FirebaseFirestore.instance
+                .collection('products')
+                .doc(_productId)
+                .set({
+              'productId': _productId,
               'userId': uid,
               'createdAt': Timestamp.now(),
               'productTitle': _productTitle,
@@ -94,6 +98,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
               'productDescription': _productDescription,
               'productQuantity': _productQuantity,
             });
+            _formKey.currentState!.reset();
             Navigator.canPop(context) ? Navigator.of(context).pop() : null;
           }
         } on FirebaseException catch (error) {
@@ -160,33 +165,37 @@ class _UploadProductFormState extends State<UploadProductForm> {
           child: InkWell(
             onTap: _trySubmit,
             splashColor: Colors.grey,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 2),
-                  child: Text('Upload',
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center),
-                ),
-                GradientIcon(
-                  Icons.upload,
-                  20,
-                  LinearGradient(
-                    colors: <Color>[
-                      Colors.green,
-                      Colors.yellow,
-                      Colors.deepOrange,
-                      Colors.orange,
-                      Colors.yellow[800]!
+            child: isLoading
+                ? Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 2),
+                        child: Text('Upload',
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.center),
+                      ),
+                      GradientIcon(
+                        Icons.upload,
+                        20,
+                        LinearGradient(
+                          colors: <Color>[
+                            Colors.green,
+                            Colors.yellow,
+                            Colors.deepOrange,
+                            Colors.orange,
+                            Colors.yellow[800]!
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
                     ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       ),
