@@ -7,6 +7,7 @@ import 'package:e_commerse/providers/carts_provider.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/providers/wishlist_provider.dart';
+import 'package:e_commerse/screens/auth/forget_password.dart';
 import 'package:e_commerse/screens/auth/login.dart';
 import 'package:e_commerse/screens/auth/sign_up.dart';
 import 'package:e_commerse/screens/cart.dart';
@@ -109,6 +110,7 @@ class _MyAppState extends State<MyApp> {
                   SignUpScreen.routeName: (context) => SignUpScreen(),
                   BottomBarScreen.routeName: (context) => BottomBarScreen(),
                   MainScreen.routeName: (context) => MainScreen(),
+                  ForgetPassword.routeName: (context) => ForgetPassword(),
                 },
               );
             }),
