@@ -5,6 +5,7 @@ import 'package:wave/wave.dart';
 
 import '../../consts/colors.dart';
 import '../../services/global_methods.dart';
+import 'forget_password.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/LoginScreen';
@@ -168,6 +169,26 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             obscureText: _obscureText,
                             onEditingComplete: _submitForm,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(ForgetPassword.routeName);
+                              },
+                              child: Text(
+                                'Forgot Password',
+                                style: TextStyle(
+                                  color: Colors.blue.shade800,
+                                  fontSize: 18,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         Row(
