@@ -1,51 +1,52 @@
+import 'package:e_commerse/providers/orders_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../services/global_methods.dart';
 import 'order_empty.dart';
 import 'order_full.dart';
 
 class OrderScreen extends StatefulWidget {
-  //To be known 1) the amount must be an integer 2) the amount must not be double 3) the minimum amount should be less than 0.5 $
   static const routeName = '/OrderScreen';
 
   @override
-  _OrderScreenState createState() => _OrderScreenState();
+  State<OrderScreen> createState() => _OrderScreenState();
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   StripeService.init();
-  // }
-
-  // void payWithCard({int amount}) async {
-  //   ProgressDialog dialog = ProgressDialog(context);
-  //   dialog.style(message: 'Please wait...');
-  //   await dialog.show();
-  //   var response = await StripeService.payWithNewCard(
-  //       currency: 'USD', amount: amount.toString());
-  //   await dialog.hide();
-  //   print('response : ${response.message}');
-  //   Scaffold.of(context).showSnackBar(SnackBar(
-  //     content: Text(response.message),
-  //     duration: Duration(milliseconds: response.success == true ? 1200 : 3000),
-  //   ));
-  // }
+//   late Future ordersFuture;
+//   @override
+//   void didChangeDependencies() {
+//     super.didChangeDependencies();
+//      Provider.of<OrdersProvider>(context).fetchOrders();
+//   }
 
   @override
   Widget build(BuildContext context) {
     GlobalMethods globalMethods = GlobalMethods();
+    final orderProvider = Provider.of<OrdersProvider>(context, listen: false);
     // final cartProvider = Provider.of<CartProvider>(context);
-    bool isOrder = false;
-    return isOrder
-        ? Scaffold(body: OrderEmpty())
-        : Scaffold(
+    return FutureBuilder(
+      future: orderProvider.fetchOrders(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        // print(snapshot.data);
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        if (orderProvider.getOrders.isEmpty) {
+          return Scaffold(body: OrderEmpty());
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Scaffold(
             appBar: AppBar(
+              foregroundColor: Colors.black,
               backgroundColor: Theme.of(context).backgroundColor,
-              title: Text('Orders ()'),
+              title: Text(
+                'Orders (${orderProvider.getOrders.length})',
+              ),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -55,18 +56,50 @@ class _OrderScreenState extends State<OrderScreen> {
                     //     () => cartProvider.clearCart(),
                     //     context);
                   },
-                  icon: Icon(Icons.remove),
+                  icon: Icon(Icons.clear),
                 )
               ],
             ),
             body: Container(
               margin: EdgeInsets.only(bottom: 60),
               child: ListView.builder(
-                  itemCount: 6,
-                  itemBuilder: (BuildContext ctx, int index) {
-                    return OrderFull();
-                  }),
+                itemCount: orderProvider.getOrders.length,
+                itemBuilder: (BuildContext ctx, int index) {
+                  return ChangeNotifierProvider.value(
+                    value: orderProvider.getOrders[index],
+                    child: OrderFull(),
+                  );
+                },
+              ),
             ),
           );
+        } else {
+          return Scaffold(body: Text('error'));
+        }
+      },
+    );
+    // Scaffold(
+    //   appBar:
+    // AppBar(
+    //           foregroundColor: Colors.black,
+    //           backgroundColor: Theme.of(context).backgroundColor,
+    //           title: Text(
+    //             'Orders',
+    //           ),
+    //           actions: [
+    //             IconButton(
+    //               onPressed: () {
+    //                 // globalMethods.showDialogg(
+    //                 //     'Clear cart!',
+    //                 //     'Your cart will be cleared!',
+    //                 //     () => cartProvider.clearCart(),
+    //                 //     context);
+    //               },
+    //               icon: Icon(Icons.clear),
+    //             )
+    //           ],
+    //         ),
+    //   body:
+    // );
   }
 }
