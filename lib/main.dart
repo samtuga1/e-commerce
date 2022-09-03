@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:e_commerse/consts/theme_data.dart';
 import 'package:e_commerse/firebase_options.dart';
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
@@ -12,20 +11,23 @@ import 'package:e_commerse/screens/auth/login.dart';
 import 'package:e_commerse/screens/auth/sign_up.dart';
 import 'package:e_commerse/screens/cart.dart';
 import 'package:e_commerse/screens/feeds.dart';
-import 'package:e_commerse/screens/landing_page.dart';
 import 'package:e_commerse/screens/main_screen.dart';
 import 'package:e_commerse/screens/user_info.dart';
 import 'package:e_commerse/screens/user_state.dart';
 import 'package:e_commerse/screens/wishlist.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'inner_screens/brands_navigation_rail copy.dart';
 import 'inner_screens/category_feeds.dart';
 import 'screens/bottom_bar.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey =
+      "pk_test_51Lb4SIJzczR0qFxUC0sES4Q1LTG3VBOP3BDWswQBCP8ZwbdTSZNWps78nRON9XjSfuNCGAVyfURSVFBqr7US4h9Z00utuq0vjp";
+  Stripe.instance.applySettings();
   runApp(MyApp());
 }
 
