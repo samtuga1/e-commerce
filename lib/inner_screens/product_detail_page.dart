@@ -2,13 +2,13 @@ import 'package:badges/badges.dart';
 import 'package:e_commerse/consts/colors.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
-import 'package:e_commerse/screens/wishlist.dart';
 import 'package:e_commerse/widgets/feeds_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/carts_provider.dart';
 import '../providers/wishlist_provider.dart';
-import '../screens/cart.dart';
+import '../screens/cart/cart.dart';
+import '../screens/wishlist/wishlist.dart';
 
 class ProductDetailPage extends StatefulWidget {
   static const routeName = '/productsDetails';
