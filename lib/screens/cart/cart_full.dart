@@ -1,6 +1,7 @@
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/cart_model.dart';
 import 'package:e_commerse/providers/carts_provider.dart';
+import 'package:e_commerse/providers/orders_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../consts/colors.dart';
@@ -17,6 +18,7 @@ class CartFull extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     final cartAttributes = Provider.of<Cart>(context);
+    final orderProvider = Provider.of<OrdersProvider>(context);
     final cartData = Provider.of<CartProvider>(context);
     GlobalMethods globalMethods = GlobalMethods();
     return InkWell(
