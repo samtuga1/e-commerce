@@ -1,8 +1,8 @@
 import 'package:e_commerse/widgets/home.dart';
+import 'cart/cart.dart';
 import 'search.dart';
 import 'package:flutter/material.dart';
 import 'user_info.dart';
-import 'cart.dart';
 import 'feeds.dart';
 
 class BottomBarScreen extends StatefulWidget {
