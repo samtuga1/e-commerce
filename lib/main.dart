@@ -9,13 +9,13 @@ import 'package:e_commerse/providers/wishlist_provider.dart';
 import 'package:e_commerse/screens/auth/forget_password.dart';
 import 'package:e_commerse/screens/auth/login.dart';
 import 'package:e_commerse/screens/auth/sign_up.dart';
-import 'package:e_commerse/screens/cart.dart';
+import 'package:e_commerse/screens/cart/cart.dart';
 import 'package:e_commerse/screens/feeds.dart';
 import 'package:e_commerse/screens/main_screen.dart';
+import 'package:e_commerse/screens/orders/order.dart';
 import 'package:e_commerse/screens/user_info.dart';
 import 'package:e_commerse/screens/user_state.dart';
-import 'package:e_commerse/screens/wishlist.dart';
-import 'package:e_commerse/services/payment.dart';
+import 'package:e_commerse/screens/wishlist/wishlist.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -114,6 +114,7 @@ class _MyAppState extends State<MyApp> {
                   BottomBarScreen.routeName: (context) => BottomBarScreen(),
                   MainScreen.routeName: (context) => MainScreen(),
                   ForgetPassword.routeName: (context) => ForgetPassword(),
+                  OrderScreen.routeName: (context) => OrderScreen(),
                 },
               );
             }),
