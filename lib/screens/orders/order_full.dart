@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerse/models/orders_attr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../inner_screens/product_detail_page.dart';
@@ -5,40 +7,21 @@ import '../../providers/carts_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/global_methods.dart';
 
-class OrderFull extends StatefulWidget {
-  final String? productId;
-
-  const OrderFull({this.productId});
-
-  // final String id;
-  // final String productId;
-  // final double price;
-  // final int quatity;
-  // final String title;
-  // final String imageUrl;
-
-  // const CartFull(
-  //     {@required this.id,
-  //     @required this.productId,
-  //     @required this.price,
-  //     @required this.quatity,
-  //     @required this.title,
-  //     @required this.imageUrl});
-  @override
-  _OrderFullState createState() => _OrderFullState();
-}
-
-class _OrderFullState extends State<OrderFull> {
+class OrderFull extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalMethods globalMethods = GlobalMethods();
+    final orderAttr = Provider.of<OrdersAttr>(context);
     final themeChange = Provider.of<DarkThemeProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, ProductDetailPage.routeName,
-          arguments: widget.productId),
+      onTap: () => Navigator.pushNamed(
+        context,
+        ProductDetailPage.routeName,
+        arguments: orderAttr.productId,
+      ),
       child: Container(
-        height: 135,
+        height: 145,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -54,22 +37,27 @@ class _OrderFullState extends State<OrderFull> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                      'https://cdn.talaco.net/talaco/assets/images/2020/12/29140316/iphone-12-pro-max-gold-hero.png'),
-                  //  fit: BoxFit.fill,
+                    orderAttr.imageUrl,
+                  ),
+                  fit: BoxFit.fill,
                 ),
               ),
+            ),
+            const SizedBox(
+              width: 10,
             ),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
                           child: Text(
-                            'title',
+                            orderAttr.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -83,12 +71,16 @@ class _OrderFullState extends State<OrderFull> {
                             // splashColor: ,
                             onTap: () {
                               globalMethods.showDialogg(
-                                  'Remove item!',
-                                  'Product will be removed from the cart!',
-                                  () => cartProvider
-                                      .deletecartItem(widget.productId!),
-                                  context);
-                              //
+                                'Remove order!',
+                                'Order will be deleted',
+                                () => FirebaseFirestore.instance
+                                    .collection('orders')
+                                    .doc(orderAttr.orderId)
+                                    .delete(),
+                                // cartProvider
+                                //     .deletecartItem(orderAttr.productId),
+                                context,
+                              );
                             },
                             child: Container(
                               height: 50,
@@ -110,7 +102,7 @@ class _OrderFullState extends State<OrderFull> {
                           width: 5,
                         ),
                         Text(
-                          '${12}\$',
+                          '${orderAttr.price}\$',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
@@ -123,9 +115,27 @@ class _OrderFullState extends State<OrderFull> {
                           width: 5,
                         ),
                         Text(
-                          'x12',
+                          'x${orderAttr.quantity}',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(child: Text('Order ID: ')),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Flexible(
+                          child: Text(
+                            '${orderAttr.orderId}\$',
+                            maxLines: 2,
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ],
                     ),
