@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,17 +12,17 @@ class OrdersProvider with ChangeNotifier {
   Future<void> fetchOrders() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     User _user = _auth.currentUser!;
-    String _uid = _user.uid;
-
+    var _uid = _user.uid;
+    print('the user Id is equal to $_uid');
     try {
       await FirebaseFirestore.instance
           .collection('orders')
           .where('userId', isEqualTo: _uid)
           .get()
           .then((QuerySnapshot ordersSnapshot) {
-        _orders = [];
+        _orders.clear();
         ordersSnapshot.docs.forEach((element) {
-          print(element.get('title').toString());
+          // print('element.get(productBrand), ${element.get('productBrand')}');
           _orders.insert(
               0,
               OrdersAttr(
@@ -41,9 +39,14 @@ class OrdersProvider with ChangeNotifier {
       });
     } catch (error) {
       print('Printing error wwhile fetching order $error');
-
-      rethrow;
     }
     notifyListeners();
+  }
+
+  void deleteOrder(String orderId) async {
+    OrdersAttr order = _orders.firstWhere((order) => order.orderId == orderId);
+    _orders.remove(order);
+    notifyListeners();
+    await FirebaseFirestore.instance.collection('orders').doc(orderId).delete();
   }
 }
