@@ -49,6 +49,7 @@ dependencies:
   fluttertoast: ^8.0.9
   uuid: ^3.0.6
   flutter_stripe: ^4.0.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
