@@ -2,14 +2,33 @@ import 'package:e_commerse/services/global_methods.dart';
 import 'package:e_commerse/services/payment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import '../consts/colors.dart';
 import '../providers/carts_provider.dart';
 import '../widgets/cart_empty.dart';
 import '../widgets/cart_full.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   static const routeName = '/CartScreen';
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  // Future<void> initPay() async {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   Stripe.publishableKey =
+  //       "pk_test_51Lb4SIJzczR0qFxUC0sES4Q1LTG3VBOP3BDWswQBCP8ZwbdTSZNWps78nRON9XjSfuNCGAVyfURSVFBqr7US4h9Z00utuq0vjp";
+  //   await Stripe.instance.applySettings();
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   initPay();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +119,12 @@ class CartScreen extends StatelessWidget {
                       onTap: () async {
                         String? email =
                             FirebaseAuth.instance.currentUser?.email;
+                        double amountInCent = total * 1000;
+                        int intAmount = (amountInCent / 10).ceil();
                         await Payment.initPayment(
-                          email: email ?? 'No email specified',
-                          amount: total.toString(),
-                          context: ctx,
+                          email: email!.isEmpty ? 'test@email.com' : email,
+                          amount: intAmount.toString(),
+                          context: context,
                         );
                       },
                       splashColor: Theme.of(ctx).splashColor,
