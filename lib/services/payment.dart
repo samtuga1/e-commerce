@@ -34,12 +34,14 @@ class Payment {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Payment was successful'),
+          backgroundColor: Colors.green,
         ),
       );
     } on StripeException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('An error occured, ${error.error.localizedMessage}'),
+          content: Text(error.error.localizedMessage.toString()),
+          backgroundColor: Colors.red,
         ),
       );
       log(error.error.localizedMessage.toString());
@@ -47,6 +49,7 @@ class Payment {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('An error occured, $error'),
+          backgroundColor: Colors.red,
         ),
       );
       log(error.toString());
