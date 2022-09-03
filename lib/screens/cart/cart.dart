@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import '../../consts/colors.dart';
 import '../../providers/carts_provider.dart';
+import 'package:http/http.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/CartScreen';
@@ -120,36 +121,47 @@ class _CartScreenState extends State<CartScreen> {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(30),
-                      onTap: () async {
-                        // double amountInCent = total * 1000;
-                        // int intAmount = (amountInCent / 10).ceil();
-                        // await Payment.initPayment(
-                        //   email: email!.isEmpty ? 'test@email.com' : email,
-                        //   amount: intAmount.toString(),
-                        //   context: context,
-                        // );
-                        try {
-                          cartProvider.cartItems
-                              .forEach((key, orderValue) async {
-                            final orderId = uuid.v4();
-                            await FirebaseFirestore.instance
-                                .collection('orders')
-                                .doc(orderId)
-                                .set({
-                              'orderId': orderId,
-                              'userId': auth?.uid,
-                              'productId': orderValue.productId,
-                              'title': orderValue.title,
-                              'price': orderValue.price! *
-                                  orderValue.quantity!.toDouble(),
-                              'imageUrl': orderValue.imageUrl,
-                              'quantity': orderValue.quantity,
-                              'orderDate': Timestamp.now(),
-                            });
-                          });
-                        } catch (error) {
-                          print('error occured $error');
-                        }
+                      onTap: () {
+                        print('pressed');
+                        double amountInCent = total * 1000;
+                        int intAmount = (amountInCent / 10).ceil();
+                        Payment.initPayment(
+                          email: 'test@gmail.com',
+                          amount: intAmount.toString(),
+                          context: context,
+                        ).then((response) {
+                          if (response!['success'] == true) {
+                            try {
+                              cartProvider.cartItems
+                                  .forEach((key, orderValue) async {
+                                final orderId = uuid.v4();
+                                await FirebaseFirestore.instance
+                                    .collection('orders')
+                                    .doc(orderId)
+                                    .set({
+                                  'orderId': orderId,
+                                  'userId': auth?.uid,
+                                  'productId': orderValue.productId,
+                                  'title': orderValue.title,
+                                  'price': orderValue.price! *
+                                      orderValue.quantity!.toDouble(),
+                                  'imageUrl': orderValue.imageUrl,
+                                  'quantity': orderValue.quantity,
+                                  'orderDate': Timestamp.now(),
+                                });
+                              });
+                            } catch (error) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Payment was successful'),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          } else {
+                            return;
+                          }
+                        });
                       },
                       splashColor: Theme.of(ctx).splashColor,
                       child: Padding(
