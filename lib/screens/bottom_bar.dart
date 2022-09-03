@@ -1,9 +1,9 @@
+import 'package:e_commerse/widgets/home.dart';
 import 'search.dart';
 import 'package:flutter/material.dart';
 import 'user_info.dart';
 import 'cart.dart';
 import 'feeds.dart';
-import 'home.dart';
 
 class BottomBarScreen extends StatefulWidget {
   static const routeName = '/bottom_bar';
