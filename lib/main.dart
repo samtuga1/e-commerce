@@ -15,6 +15,7 @@ import 'package:e_commerse/screens/main_screen.dart';
 import 'package:e_commerse/screens/user_info.dart';
 import 'package:e_commerse/screens/user_state.dart';
 import 'package:e_commerse/screens/wishlist.dart';
+import 'package:e_commerse/services/payment.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
