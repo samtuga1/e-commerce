@@ -1,4 +1,6 @@
 import 'package:e_commerse/services/global_methods.dart';
+import 'package:e_commerse/services/payment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../consts/colors.dart';
@@ -95,7 +97,15 @@ class CartScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(30),
-                      onTap: () {},
+                      onTap: () async {
+                        String? email =
+                            FirebaseAuth.instance.currentUser?.email;
+                        await Payment.initPayment(
+                          email: email ?? 'No email specified',
+                          amount: total.toString(),
+                          context: ctx,
+                        );
+                      },
                       splashColor: Theme.of(ctx).splashColor,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
