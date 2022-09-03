@@ -3,6 +3,7 @@ import 'package:e_commerse/consts/theme_data.dart';
 import 'package:e_commerse/firebase_options.dart';
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/providers/carts_provider.dart';
+import 'package:e_commerse/providers/orders_provider.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
 import 'package:e_commerse/providers/wishlist_provider.dart';
@@ -91,6 +92,9 @@ class _MyAppState extends State<MyApp> {
               ),
               ChangeNotifierProvider(
                 create: (ctx) => WishListProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (ctx) => OrdersProvider(),
               ),
             ],
             child: Consumer<DarkThemeProvider>(
