@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,17 +14,17 @@ class OrdersProvider with ChangeNotifier {
   Future<void> fetchOrders() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     User _user = _auth.currentUser!;
-    var _uid = _user.uid;
-    print('the user Id is equal to $_uid');
+    String _uid = _user.uid;
+
     try {
       await FirebaseFirestore.instance
-          .collection('order')
+          .collection('orders')
           .where('userId', isEqualTo: _uid)
           .get()
           .then((QuerySnapshot ordersSnapshot) {
-        _orders.clear();
+        _orders = [];
         ordersSnapshot.docs.forEach((element) {
-          // print('element.get(productBrand), ${element.get('productBrand')}');
+          print(element.get('title').toString());
           _orders.insert(
               0,
               OrdersAttr(
@@ -39,6 +41,8 @@ class OrdersProvider with ChangeNotifier {
       });
     } catch (error) {
       print('Printing error wwhile fetching order $error');
+
+      rethrow;
     }
     notifyListeners();
   }
