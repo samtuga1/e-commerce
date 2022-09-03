@@ -1,16 +1,15 @@
 import 'package:badges/badges.dart';
 import 'package:e_commerse/providers/product_provider.dart';
-import 'package:e_commerse/screens/wishlist.dart';
+import 'package:e_commerse/screens/cart/cart.dart';
+import 'package:e_commerse/screens/wishlist/wishlist.dart';
 import 'package:e_commerse/widgets/feeds_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-
 import '../consts/colors.dart';
 import '../models/product_model.dart';
 import '../providers/carts_provider.dart';
 import '../providers/wishlist_provider.dart';
-import 'cart.dart';
 
 class Feeds extends StatelessWidget {
   static const routeName = '/feeds';
