@@ -54,7 +54,8 @@ class _OrderScreenState extends State<OrderScreen> {
                     //     'Clear cart!',
                     //     'Your cart will be cleared!',
                     //     () => cartProvider.clearCart(),
-                    //     context);
+                    //     context,
+                    // );
                   },
                   icon: Icon(Icons.clear),
                 )
@@ -74,7 +75,9 @@ class _OrderScreenState extends State<OrderScreen> {
             ),
           );
         } else {
-          return Scaffold(body: Text('error'));
+          return Scaffold(
+            body: Text('error'),
+          );
         }
       },
     );
