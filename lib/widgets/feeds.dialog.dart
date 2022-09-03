@@ -1,3 +1,4 @@
+import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/wishlist_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class FeedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Products>(context).findById(productId);
+    final cartProvider = Provider.of<CartProvider>(context);
+    final favs = Provider.of<WishListProvider>(context);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -39,13 +42,32 @@ class FeedDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Flexible(
-                    child: dialogContent(context, 0, () {}),
+                    child: dialogContent(context, 0, () {
+                      favs.addAndRemoveFav(
+                        productId,
+                        product.title!,
+                        product.price!,
+                        product.imageUrl!,
+                      );
+                      Navigator.of(context).pop();
+                    }),
                   ),
                   Flexible(
-                    child: dialogContent(context, 1, () {}),
+                    child: dialogContent(context, 1, () {
+                      Navigator.pushNamed(context, ProductDetailPage.routeName,
+                          arguments: productId);
+                    }),
                   ),
                   Flexible(
-                    child: dialogContent(context, 2, () {}),
+                    child: dialogContent(context, 2, () {
+                      cartProvider.addItemToCart(
+                        productId,
+                        product.title!,
+                        product.price!,
+                        product.imageUrl!,
+                      );
+                      Navigator.of(context).pop();
+                    }),
                   ),
                 ]),
           ),
@@ -76,7 +98,7 @@ class FeedDialog extends StatelessWidget {
     );
   }
 
-  Widget dialogContent(BuildContext context, int index, Function fct) {
+  Widget dialogContent(BuildContext context, int index, Function() fct) {
     final cart = Provider.of<CartProvider>(context);
     final favs = Provider.of<WishListProvider>(context);
     List<IconData> _dialogIcons = [
@@ -105,7 +127,7 @@ class FeedDialog extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () => fct,
+          onTap: fct,
           splashColor: Colors.grey,
           child: Container(
             width: MediaQuery.of(context).size.width * 0.25,
