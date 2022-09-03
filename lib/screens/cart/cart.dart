@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerse/screens/cart/cart_empty.dart';
 import 'package:e_commerse/screens/cart/cart_full.dart';
 import 'package:e_commerse/services/global_methods.dart';
@@ -5,6 +6,7 @@ import 'package:e_commerse/services/payment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 import '../../consts/colors.dart';
 import '../../providers/carts_provider.dart';
 
@@ -70,6 +72,9 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget checkoutSection(BuildContext ctx, double total) {
+    var uuid = Uuid();
+    final auth = FirebaseAuth.instance.currentUser;
+    final cartProvider = Provider.of<CartProvider>(context);
     return Container(
         decoration: BoxDecoration(
           border: Border(
@@ -116,15 +121,35 @@ class _CartScreenState extends State<CartScreen> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(30),
                       onTap: () async {
-                        String? email =
-                            FirebaseAuth.instance.currentUser?.email;
-                        double amountInCent = total * 1000;
-                        int intAmount = (amountInCent / 10).ceil();
-                        await Payment.initPayment(
-                          email: email!.isEmpty ? 'test@email.com' : email,
-                          amount: intAmount.toString(),
-                          context: context,
-                        );
+                        // double amountInCent = total * 1000;
+                        // int intAmount = (amountInCent / 10).ceil();
+                        // await Payment.initPayment(
+                        //   email: email!.isEmpty ? 'test@email.com' : email,
+                        //   amount: intAmount.toString(),
+                        //   context: context,
+                        // );
+                        try {
+                          cartProvider.cartItems
+                              .forEach((key, orderValue) async {
+                            final orderId = uuid.v4();
+                            await FirebaseFirestore.instance
+                                .collection('orders')
+                                .doc(orderId)
+                                .set({
+                              'orderId': orderId,
+                              'userId': auth?.uid,
+                              'productId': orderValue.productId,
+                              'title': orderValue.title,
+                              'price': orderValue.price! *
+                                  orderValue.quantity!.toDouble(),
+                              'imageUrl': orderValue.imageUrl,
+                              'quantity': orderValue.quantity,
+                              'orderDate': Timestamp.now(),
+                            });
+                          });
+                        } catch (error) {
+                          print('error occured $error');
+                        }
                       },
                       splashColor: Theme.of(ctx).splashColor,
                       child: Padding(
