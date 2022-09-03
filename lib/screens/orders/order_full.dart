@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerse/models/orders_attr.dart';
+import 'package:e_commerse/providers/orders_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../inner_screens/product_detail_page.dart';
@@ -7,13 +8,19 @@ import '../../providers/carts_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/global_methods.dart';
 
-class OrderFull extends StatelessWidget {
+class OrderFull extends StatefulWidget {
+  @override
+  State<OrderFull> createState() => _OrderFullState();
+}
+
+class _OrderFullState extends State<OrderFull> {
+  bool _loading = false;
   @override
   Widget build(BuildContext context) {
     GlobalMethods globalMethods = GlobalMethods();
     final orderAttr = Provider.of<OrdersAttr>(context);
     final themeChange = Provider.of<DarkThemeProvider>(context);
-    final cartProvider = Provider.of<CartProvider>(context);
+    final orderProvider = Provider.of<OrdersProvider>(context);
     return InkWell(
       onTap: () => Navigator.pushNamed(
         context,
@@ -73,23 +80,32 @@ class OrderFull extends StatelessWidget {
                               globalMethods.showDialogg(
                                 'Remove order!',
                                 'Order will be deleted',
-                                () => FirebaseFirestore.instance
-                                    .collection('orders')
-                                    .doc(orderAttr.orderId)
-                                    .delete(),
-                                // cartProvider
-                                //     .deletecartItem(orderAttr.productId),
+                                () async {
+                                  orderProvider.deleteOrder(orderAttr.orderId);
+                                  // setState(() {
+                                  //   print('delete');
+                                  //   _loading = true;
+                                  // });
+                                  // await FirebaseFirestore.instance
+                                  //     .collection('orders')
+                                  //     .doc(orderAttr.orderId)
+                                  //     .delete();
+                                },
                                 context,
                               );
                             },
                             child: Container(
                               height: 50,
                               width: 50,
-                              child: Icon(
-                                Icons.cancel,
-                                color: Colors.red,
-                                size: 22,
-                              ),
+                              child: _loading
+                                  ? Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : Icon(
+                                      Icons.cancel,
+                                      color: Colors.red,
+                                      size: 22,
+                                    ),
                             ),
                           ),
                         ),
