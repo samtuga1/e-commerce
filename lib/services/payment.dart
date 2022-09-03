@@ -3,23 +3,24 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class Payment {
-  static Future<void> initPayment(
+  static Future<Map?> initPayment(
       {required String email,
       required String amount,
       required BuildContext context}) async {
     try {
       // CREATE A PAYMENT INTENT ON THE SERVER
-      final response = await http.post(
+      http.Response response = await http.post(
           Uri.parse(
               'https://us-central1-e-commerce-a70a6.cloudfunctions.net/stripePaymentIntentRequest'),
           body: {
             'email': email,
             'amount': amount,
           });
+
       final jsonResponse = jsonDecode(response.body);
-      print(jsonResponse);
 
       // INITIALIZE PAYMENT SHEET
       await Stripe.instance.initPaymentSheet(
@@ -37,6 +38,7 @@ class Payment {
           backgroundColor: Colors.green,
         ),
       );
+      return jsonResponse;
     } on StripeException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
