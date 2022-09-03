@@ -2,12 +2,11 @@ import 'package:badges/badges.dart';
 import 'package:e_commerse/providers/wishlist_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../consts/colors.dart';
 import '../providers/carts_provider.dart';
-import '../screens/cart.dart';
+import '../screens/cart/cart.dart';
 import '../screens/user_info.dart';
-import '../screens/wishlist.dart';
+import '../screens/wishlist/wishlist.dart';
 
 class SearchByHeader extends SliverPersistentHeaderDelegate {
   final double flexibleSpace;
