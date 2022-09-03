@@ -19,7 +19,7 @@ class OrderEmpty extends StatelessWidget {
             image: DecorationImage(
               fit: BoxFit.fill,
               image: NetworkImage(
-                'https://www.freeiconspng.com/uploads/production-icon-20.png',
+                'https://www.alaawain.com/public/images/emptycart.png',
               ),
             ),
           ),
