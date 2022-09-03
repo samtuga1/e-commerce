@@ -39,7 +39,7 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     GlobalMethods globalMethods = GlobalMethods();
     // final cartProvider = Provider.of<CartProvider>(context);
-    bool isOrder = true;
+    bool isOrder = false;
     return isOrder
         ? Scaffold(body: OrderEmpty())
         : Scaffold(
