@@ -18,6 +18,7 @@ class CartProvider with ChangeNotifier {
       _cartItems.update(
         productId,
         (existingProduct) => Cart(
+          productId: existingProduct.id!,
           id: existingProduct.id,
           title: existingProduct.title,
           price: existingProduct.price,
@@ -29,6 +30,7 @@ class CartProvider with ChangeNotifier {
       _cartItems.putIfAbsent(
         productId,
         () => Cart(
+          productId: productId,
           id: DateTime.now().toString(),
           imageUrl: imageUrl,
           price: price,
@@ -46,6 +48,7 @@ class CartProvider with ChangeNotifier {
       _cartItems.update(
         productId,
         (existingProduct) => Cart(
+          productId: existingProduct.productId,
           id: existingProduct.id,
           title: existingProduct.title,
           price: existingProduct.price,
