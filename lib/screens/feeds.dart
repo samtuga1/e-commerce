@@ -11,9 +11,19 @@ import '../models/product_model.dart';
 import '../providers/carts_provider.dart';
 import '../providers/wishlist_provider.dart';
 
-class Feeds extends StatelessWidget {
+class Feeds extends StatefulWidget {
   static const routeName = '/feeds';
   Feeds({Key? key}) : super(key: key);
+
+  @override
+  State<Feeds> createState() => _FeedsState();
+}
+
+class _FeedsState extends State<Feeds> {
+  Future<void> getProducts() async {
+    Provider.of<Products>(context, listen: false).fetchProducts();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +85,19 @@ class Feeds extends StatelessWidget {
               )
             ]),
         body: SafeArea(
-          child: MasonryGridView.count(
-            padding: EdgeInsets.all(3),
-            crossAxisCount: 2,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-            itemCount: products.length,
-            itemBuilder: (context, index) => ChangeNotifierProvider.value(
-              value: products[index],
-              child: FeedProducts(
-                height: index % 2 == 0 ? 310 : 350,
+          child: RefreshIndicator(
+            onRefresh: getProducts,
+            child: MasonryGridView.count(
+              padding: EdgeInsets.all(3),
+              crossAxisCount: 2,
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
+              itemCount: products.length,
+              itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                value: products[index],
+                child: FeedProducts(
+                  height: index % 2 == 0 ? 310 : 350,
+                ),
               ),
             ),
           ),
