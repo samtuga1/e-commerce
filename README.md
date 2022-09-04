@@ -3,7 +3,7 @@
 ## DEVICE MOCKUPS
 ![Mockup](https://user-images.githubusercontent.com/79772304/188312763-07b6a6fc-134e-443c-8b13-6603c40dbadf.png)
 
-## Tech Stacks AND FEATURES
+## Tech Stacks and Features
 1. Flutter
 2. Provider State Management
 3. Firebase Google Sign in
