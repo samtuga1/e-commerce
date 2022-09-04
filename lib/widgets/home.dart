@@ -89,7 +89,12 @@ class Home extends StatelessWidget {
                     ),
                     FlatButton(
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          BrandNavigationRailScreen.routeName,
+                          arguments: {7},
+                        );
+                      },
                       child: Text(
                         'View all...',
                         style: TextStyle(
@@ -116,6 +121,7 @@ class Home extends StatelessWidget {
                     );
                   },
                   onTap: (index) {
+                    print(index);
                     Navigator.of(context).pushNamed(
                       BrandNavigationRailScreen.routeName,
                       arguments: {
