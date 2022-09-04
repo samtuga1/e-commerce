@@ -25,7 +25,6 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
     _selectedIndex = int.parse(
       routeArgs.substring(1, 2),
     );
-    print(routeArgs.toString());
     if (_selectedIndex == 0) {
       setState(() {
         brand = 'Addidas';
@@ -176,8 +175,6 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
               );
             },
           ),
-          // This is the main content.
-
           ContentSpace(context, brand)
         ],
       ),
@@ -212,14 +209,29 @@ class ContentSpace extends StatelessWidget {
         child: MediaQuery.removePadding(
           removeTop: true,
           context: context,
-          child: ListView.builder(
-            itemCount: brandProducts.length,
-            itemBuilder: (BuildContext context, int index) =>
-                ChangeNotifierProvider.value(
-              value: brandProducts[index],
-              child: BrandsNavigationRail(),
-            ),
-          ),
+          child: brandProducts.isEmpty
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.warning),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      'No products associated with this brand',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  itemCount: brandProducts.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      ChangeNotifierProvider.value(
+                    value: brandProducts[index],
+                    child: BrandsNavigationRail(),
+                  ),
+                ),
         ),
       ),
     );
