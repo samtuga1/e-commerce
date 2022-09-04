@@ -16,19 +16,40 @@ class CategoryFeedsScreen extends StatelessWidget {
         Provider.of<Products>(context).findByCategory(categoryName);
     return Scaffold(
       body: SafeArea(
-        child: MasonryGridView.count(
-          padding: EdgeInsets.all(3),
-          crossAxisCount: 2,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
-          itemCount: categoryProductList.length,
-          itemBuilder: (context, index) => ChangeNotifierProvider.value(
-            value: categoryProductList[index],
-            child: FeedProducts(
-              height: index % 2 == 0 ? 310 : 350,
-            ),
-          ),
-        ),
+        child: categoryProductList.isEmpty
+            ? Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.warning,
+                      size: 30,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'No products associated with this brand',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    ),
+                  ],
+                ),
+              )
+            : MasonryGridView.count(
+                padding: EdgeInsets.all(3),
+                crossAxisCount: 2,
+                mainAxisSpacing: 4,
+                crossAxisSpacing: 4,
+                itemCount: categoryProductList.length,
+                itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                  value: categoryProductList[index],
+                  child: FeedProducts(
+                    height: index % 2 == 0 ? 310 : 350,
+                  ),
+                ),
+              ),
       ),
     );
   }
