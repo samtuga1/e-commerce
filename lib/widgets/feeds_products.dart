@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as ba;
 import 'package:e_commerse/inner_screens/product_detail_page.dart';
 import 'package:e_commerse/models/product_model.dart';
 import 'package:e_commerse/widgets/feeds.dialog.dart';
@@ -32,7 +32,7 @@ class _FeedProductsState extends State<FeedProducts> {
           width: 250,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: Theme.of(context).backgroundColor),
+              color: Theme.of(context).colorScheme.background),
           child: Column(
             children: [
               Stack(children: [
@@ -42,16 +42,16 @@ class _FeedProductsState extends State<FeedProducts> {
                     width: double.infinity,
                     constraints: BoxConstraints(
                         minHeight: 100,
-                        maxHeight: MediaQuery.of(context).size.height * 0.3),
+                        maxHeight: MediaQuery.of(context).size.height * 0.2),
                     child: Image.network(
                       productAttributes.imageUrl!,
                       fit: BoxFit.fitWidth,
                     ),
                   ),
                 ),
-                Badge(
+                ba.Badge(
                   toAnimate: true,
-                  shape: BadgeShape.square,
+                  shape: ba.BadgeShape.square,
                   badgeColor: Colors.pink,
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(8),

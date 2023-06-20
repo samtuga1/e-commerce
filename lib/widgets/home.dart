@@ -87,8 +87,10 @@ class Home extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.zero,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                      ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                           BrandNavigationRailScreen.routeName,
@@ -146,8 +148,10 @@ class Home extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.zero,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                      ),
                       onPressed: () {
                         Navigator.of(context)
                             .pushNamed(Feeds.routeName, arguments: 'popular');

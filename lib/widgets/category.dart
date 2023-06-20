@@ -1,8 +1,6 @@
 import 'package:e_commerse/inner_screens/category_feeds.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/feeds.dart';
-
 class Category extends StatelessWidget {
   Category({Key? key, required this.index}) : super(key: key);
 
@@ -61,14 +59,14 @@ class Category extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               footer: GridTileBar(
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor: Theme.of(context).colorScheme.background,
                 title: Text(
                   categoryList[index]['name']!,
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: Theme.of(context).textSelectionColor,
-                  ),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor),
                 ),
               ),
             ),

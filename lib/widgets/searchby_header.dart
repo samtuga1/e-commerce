@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as ba;
 import 'package:e_commerse/providers/wishlist_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,9 +62,9 @@ class SearchByHeader extends SliverPersistentHeaderDelegate {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Consumer<WishListProvider>(
-                  builder: (_, favs, ch) => Badge(
+                  builder: (_, favs, ch) => ba.Badge(
                     badgeColor: ColorsConsts.favBadgeColor,
-                    position: BadgePosition.topEnd(top: 5, end: 7),
+                    position: ba.BadgePosition.topEnd(top: 5, end: 7),
                     badgeContent: Text(
                       favs.favsLists.length.toString(),
                       style: TextStyle(color: ColorsConsts.white),
@@ -79,9 +79,9 @@ class SearchByHeader extends SliverPersistentHeaderDelegate {
                   ),
                 ),
                 Consumer<CartProvider>(
-                  builder: (_, cart, ch) => Badge(
+                  builder: (_, cart, ch) => ba.Badge(
                     badgeColor: ColorsConsts.cartBadgeColor,
-                    position: BadgePosition.topEnd(top: 5, end: 7),
+                    position: ba.BadgePosition.topEnd(top: 5, end: 7),
                     badgeContent: Text(
                       cart.cartItems.length.toString(),
                       style: TextStyle(color: ColorsConsts.white),

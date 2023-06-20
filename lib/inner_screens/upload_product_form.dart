@@ -46,7 +46,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
           title: Text(title),
           content: Text(body),
           actions: [
-            FlatButton(
+            ElevatedButton(
               child: Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -161,7 +161,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
           ),
         ),
         child: Material(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           child: InkWell(
             onTap: _trySubmit,
             splashColor: Colors.grey,
@@ -284,8 +284,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                       decoration: BoxDecoration(
                                         border: Border.all(width: 1),
                                         borderRadius: BorderRadius.circular(4),
-                                        color:
-                                            Theme.of(context).backgroundColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background,
                                       ),
                                     )
                                   : Container(
@@ -299,8 +300,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                           // borderRadius: BorderRadius.only(
                                           //   topLeft: const Radius.circular(40.0),
                                           // ),
-                                          color:
-                                              Theme.of(context).backgroundColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
                                         ),
                                         child: Image.file(
                                           this._pickedImage!,
@@ -315,8 +317,10 @@ class _UploadProductFormState extends State<UploadProductForm> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 FittedBox(
-                                  child: FlatButton.icon(
-                                    textColor: Colors.white,
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                    ),
                                     onPressed: _pickImageCamera,
                                     icon: Icon(Icons.camera,
                                         color: Colors.purpleAccent),
@@ -325,14 +329,17 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: Theme.of(context)
-                                            .textSelectionColor,
+                                            .textSelectionTheme
+                                            .selectionColor,
                                       ),
                                     ),
                                   ),
                                 ),
                                 FittedBox(
-                                  child: FlatButton.icon(
-                                    textColor: Colors.white,
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                    ),
                                     onPressed: _pickImageGallery,
                                     icon: Icon(Icons.image,
                                         color: Colors.purpleAccent),
@@ -341,14 +348,17 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: Theme.of(context)
-                                            .textSelectionColor,
+                                            .textSelectionTheme
+                                            .selectionColor,
                                       ),
                                     ),
                                   ),
                                 ),
                                 FittedBox(
-                                  child: FlatButton.icon(
-                                    textColor: Colors.white,
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                    ),
                                     onPressed: _removeImage,
                                     icon: Icon(
                                       Icons.remove_circle_rounded,

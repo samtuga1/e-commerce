@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as ba;
 import 'package:e_commerse/consts/colors.dart';
 import 'package:e_commerse/providers/product_provider.dart';
 import 'package:e_commerse/providers/theme_provider.dart';
@@ -28,7 +28,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           Text(
             '$title: ',
             style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontWeight: FontWeight.w600,
               fontSize: 21.0,
             ),
@@ -197,7 +197,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         height: 1,
                       ),
                       Container(
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                         width: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -293,11 +293,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Navigator.of(context).pushNamed(WishlistScreen.routeName);
                   },
                   icon: Consumer<WishListProvider>(
-                    builder: (_, favs, ch) => Badge(
+                    builder: (_, favs, ch) => ba.Badge(
                       badgeColor: ColorsConsts.favBadgeColor,
-                      animationType: BadgeAnimationType.slide,
+                      animationType: ba.BadgeAnimationType.slide,
                       toAnimate: true,
-                      position: BadgePosition.topEnd(),
+                      position: ba.BadgePosition.topEnd(),
                       badgeContent: Text(
                         favs.favsLists.length.toString(),
                         style: TextStyle(color: Colors.white),
@@ -314,11 +314,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Navigator.of(context).pushNamed(CartScreen.routeName);
                   },
                   icon: Consumer<CartProvider>(
-                    builder: (_, carts, ch) => Badge(
+                    builder: (_, carts, ch) => ba.Badge(
                       badgeColor: ColorsConsts.cartBadgeColor,
-                      animationType: BadgeAnimationType.slide,
+                      animationType: ba.BadgeAnimationType.slide,
                       toAnimate: true,
-                      position: BadgePosition.topEnd(),
+                      position: ba.BadgePosition.topEnd(),
                       badgeContent: Text(
                         carts.cartItems.length.toString(),
                         style: TextStyle(color: Colors.white),
@@ -341,10 +341,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   flex: 3,
                   child: Container(
                     height: 50,
-                    child: RaisedButton(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape: RoundedRectangleBorder(side: BorderSide.none),
-                      color: Colors.redAccent.shade400,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(side: BorderSide.none),
+                        backgroundColor: Colors.redAccent.shade400,
+                      ),
                       onPressed: cartData.cartItems.containsKey(product.id)
                           ? () {}
                           : () {
@@ -371,10 +373,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   flex: 2,
                   child: Container(
                     height: 50,
-                    child: RaisedButton(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape: RoundedRectangleBorder(side: BorderSide.none),
-                      color: Theme.of(context).backgroundColor,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(side: BorderSide.none),
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                      ),
                       onPressed: () {},
                       child: Row(
                         children: [

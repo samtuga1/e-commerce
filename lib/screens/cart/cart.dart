@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import '../../consts/colors.dart';
 import '../../providers/carts_provider.dart';
-import 'package:http/http.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/CartScreen';
@@ -90,7 +89,7 @@ class _CartScreenState extends State<CartScreen> {
               Text(
                 'Total:',
                 style: TextStyle(
-                    color: Theme.of(ctx).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontSize: 18,
                     fontWeight: FontWeight.w600),
               ),
@@ -170,7 +169,9 @@ class _CartScreenState extends State<CartScreen> {
                           'Checkout',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(ctx).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 18,
                               fontWeight: FontWeight.w600),
                         ),

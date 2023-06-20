@@ -64,7 +64,8 @@ class BrandsNavigationRail extends StatelessWidget {
                       maxLines: 4,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: Theme.of(context).textSelectionColor,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
                     ),
                     SizedBox(

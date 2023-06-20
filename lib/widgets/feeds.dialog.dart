@@ -115,12 +115,12 @@ class FeedDialog extends StatelessWidget {
       'View product',
       cart.cartItems.containsKey(productId) ? 'In Cart ' : 'Add to cart',
     ];
-    List<Color> _colors = [
+    List<Color?> _colors = [
       favs.favsLists.containsKey(productId)
           ? Colors.red
-          : Theme.of(context).textSelectionColor,
-      Theme.of(context).textSelectionColor,
-      Theme.of(context).textSelectionColor,
+          : Theme.of(context).textSelectionTheme.selectionColor,
+      Theme.of(context).textSelectionTheme.selectionColor,
+      Theme.of(context).textSelectionTheme.selectionColor,
     ];
     final themeChange = Provider.of<DarkThemeProvider>(context);
     return FittedBox(
@@ -136,7 +136,7 @@ class FeedDialog extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(

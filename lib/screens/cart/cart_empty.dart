@@ -26,7 +26,7 @@ class CartEmpty extends StatelessWidget {
             'Your Cart Is Empty',
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontSize: 36,
                 fontWeight: FontWeight.w600),
           ),
@@ -49,18 +49,20 @@ class CartEmpty extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.06,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: Colors.red),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(color: Colors.red),
+                ),
+                backgroundColor: Colors.redAccent,
               ),
-              color: Colors.redAccent,
               child: Text(
                 'shop now'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontSize: 26,
                     fontWeight: FontWeight.w600),
               ),

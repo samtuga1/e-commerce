@@ -24,13 +24,13 @@ class GlobalMethods {
         ),
         content: Text(subtitle),
         actions: [
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: Text('Cancel'),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               fxn();
               Navigator.of(context).pop();
@@ -64,13 +64,13 @@ class GlobalMethods {
         ),
         content: Text('Do you really wanna Sign out?'),
         actions: [
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: Text('Cancel'),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               fxn();
               Navigator.of(context).pop();
@@ -104,7 +104,7 @@ class GlobalMethods {
         ),
         content: Text(subtitle),
         actions: [
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
             },

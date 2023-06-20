@@ -27,7 +27,7 @@ class WishlistEmpty extends StatelessWidget {
             'Your WishList is empty',
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontSize: 36,
                 fontWeight: FontWeight.w600),
           ),
@@ -50,20 +50,22 @@ class WishlistEmpty extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.06,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(Feeds.routeName);
               },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: Colors.red),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(color: Colors.red),
+                ),
+                backgroundColor: Colors.redAccent,
               ),
-              color: Colors.redAccent,
               child: Text(
                 'Add a wish'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                   fontSize: 26,
                   fontWeight: FontWeight.w600,
                 ),

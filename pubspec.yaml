@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -27,7 +27,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -41,14 +40,14 @@ dependencies:
   cached_network_image: ^3.2.1
   wave: ^0.2.2
   image_picker: ^0.8.5+3
-  firebase_core: ^1.19.1
-  firebase_auth: ^3.6.3
-  google_sign_in: ^5.4.1
-  cloud_firestore: ^3.4.5
-  firebase_storage: ^10.3.6
+  firebase_core: ^2.14.0
+  firebase_auth: ^4.6.3
+  google_sign_in: ^6.1.4
+  cloud_firestore: ^4.8.1
+  firebase_storage: ^11.2.3
   fluttertoast: ^8.0.9
   uuid: ^3.0.6
-  flutter_stripe: ^4.0.0
+  flutter_stripe: ^9.2.2
   http: ^0.13.5
 
 dev_dependencies:
@@ -60,7 +59,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

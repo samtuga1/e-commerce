@@ -66,7 +66,8 @@ class _PopularProductsState extends State<PopularProducts> {
                             color: Colors.black,
                           ),
                         ),
-                        backgroundColor: Theme.of(context).backgroundColor,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -78,7 +79,9 @@ class _PopularProductsState extends State<PopularProducts> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Theme.of(context).textSelectionColor,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
                               ),
                             ),
                             const SizedBox(height: 16),
@@ -119,7 +122,9 @@ class _PopularProductsState extends State<PopularProducts> {
                         child: Text(
                           '\$ ${productAttribute.price}',
                           style: TextStyle(
-                            color: Theme.of(context).textSelectionColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                           ),
                         ),
                       ),
