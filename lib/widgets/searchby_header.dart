@@ -112,7 +112,7 @@ class SearchByHeader extends SliverPersistentHeaderDelegate {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserInfo(),
+                    builder: (context) => Scaffold(body: UserInfo()),
                   ),
                 ),
                 child: Container(

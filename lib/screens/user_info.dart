@@ -165,7 +165,7 @@ class _UserInfoState extends State<UserInfo> {
                   child: FlexibleSpaceBar(
                     background: Image.network(
                       _userImage ??
-                          'https://monstar-lab.com/global/wp-content/uploads/sites/11/2019/04/male-placeholder-image.jpeg',
+                          "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
                       fit: BoxFit.cover,
                     ),
                     centerTitle: true,
@@ -192,7 +192,7 @@ class _UserInfoState extends State<UserInfo> {
                                 fit: BoxFit.fill,
                                 image: NetworkImage(
                                   _userImage ??
-                                      'https://monstar-lab.com/global/wp-content/uploads/sites/11/2019/04/male-placeholder-image.jpeg',
+                                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL_JlCFnIGX5omgjEjgV9F3sBRq14eTERK9w&usqp=CAU',
                                 ),
                               ),
                             ),
@@ -200,7 +200,7 @@ class _UserInfoState extends State<UserInfo> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text(_name ?? 'test'),
+                          Text(_name ?? 'Guest'),
                         ],
                       ),
                     ),
